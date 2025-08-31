@@ -1,71 +1,119 @@
 <?php
+session_start();
 
-$items = [
+// Items grouped by category ID
+$categories = [
   1 => [
-    "title" => "P.R IND Rackets",
-    "description" => "Lightweight & powerful racket for advanced players.",
-    "image" => "PR.jpg"
-    //"price" => "$180",
-    //"metadata" => "Category: Rackets | Brand: Yonex"
+    [
+      "title" => "P.R IND Racket Model A",
+      "description" => "Lightweight racket for speed.",
+      "image" => "../ItemList/PR.jpg",
+      "price" => "RM180"
+    ],
+    [
+      "title" => "P.R IND Racket Model B",
+      "description" => "Powerful racket for advanced players.",
+      "image" => "../ItemList/PR.jpg",
+      "price" => "RM200"
+    ]
   ],
   2 => [
-    "title" => "Li-Ning Turbo Shoes",
-    "description" => "Comfort and agility for every match.",
-    "image" => "../ItemList/LiningTBS.jpg",
-    //"price" => "$120",
-    //"metadata" => "Category: Shoes | Brand: Li-Ning"
+    [
+      "title" => "Li-Ning Turbo Shoes Red",
+      "description" => "Comfortable red shoes for matches.",
+      "image" => "../ItemList/LiningTBS.jpg",
+      "price" => "RM120"
+    ],
+    [
+      "title" => "Li-Ning Turbo Shoes Blue",
+      "description" => "Agile blue shoes for quick movement.",
+      "image" => "../ItemList/LiningTBS.jpg",
+      "price" => "RM130"
+    ]
   ],
   3 => [
-    "title" => "Yonex Shuttles",
-    "description" => "Durable feather shuttlecocks for tournaments.",
-    "image" => "../ItemList/YonexS.jpg",
-    //"price" => "$30",
-   // "metadata" => "Category: Shuttles | Brand: Yonex"
+    [
+      "title" => "Yonex Tournament Shuttles",
+      "description" => "Durable feather shuttlecocks.",
+      "image" => "../ItemList/YonexS.jpg",
+      "price" => "RM30"
+    ],
+    [
+      "title" => "Yonex Practice Shuttles",
+      "description" => "Affordable shuttles for practice.",
+      "image" => "../ItemList/YonexS.jpg",
+      "price" => "RM20"
+    ]
   ]
 ];
 
-// Get item ID from URL
-$id = $_GET['id'] ?? null;
+// Get category ID from URL
+$catId = $_GET['id'] ?? null;
 
-// Check if item exists
-if(!$id || !isset($items[$id])) {
-  die("Item not found!");
+// Handle add to cart
+if (isset($_GET['add'])) {
+  $addId = $_GET['add'];
+  $_SESSION['cart'][] = $addId;
+  $msg = "Item added to cart!";
 }
-$item = $items[$id];
+
+// Show items for selected category
+if (!$catId || !isset($categories[$catId])) {
+  echo "Category not found!";
+  exit;
+}
+$items = $categories[$catId];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><?= $item['title'] ?></title>
+  <title>Category Details</title>
   <style>
     body { font-family: Arial, sans-serif; background: #f9f9f9; margin: 0; padding: 20px; }
-    .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    img { max-width: 100%; border-radius: 10px; margin-bottom: 20px; }
-    h2 { margin: 0 0 10px; }
-    .price { font-size: 1.5rem; color: #e67e22; margin-bottom: 10px; }
-    .btn { display: inline-block; padding: 10px 16px; background: #ffcc00; border-radius: 5px; text-decoration: none; color: #111; font-weight: bold; margin-top: 10px; }
+    .container { max-width: 1200px; margin: auto; }
+    .items-row { display: flex; gap: 20px; flex-wrap: wrap; }
+    .card { background: #fff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 20px; width: 300px; display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
+    .card img { width: 100%; max-width: 250px; border-radius: 10px; margin-bottom: 20px; }
+    .item-title { font-size: 1.2rem; margin-bottom: 10px; text-align: center; }
+    .item-desc { margin-bottom: 10px; text-align: center; }
+    .item-price { color: #e67e22; font-weight: bold; margin-bottom: 10px; text-align: center; }
+    .btn { display: inline-block; padding: 8px 14px; background: #ffcc00; border-radius: 5px; text-decoration: none; color: #111; font-weight: bold; margin-bottom: 10px;}
     .btn:hover { background: #ffaa00; }
-    .reviews { margin-top: 30px; }
-    .review { background: #f1f1f1; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
+    .msg { color: green; margin-bottom: 15px; text-align: center; }
+    .cart { margin-bottom: 20px; text-align: center; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2><?= $item['title'] ?></h2>
-    <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>">
-    <p class="price"><?= $item['price'] ?></p>
-    <p><strong><?= $item['metadata'] ?></strong></p>
-    <p><?= $item['description'] ?></p>
+    <?php if (!empty($msg)): ?>
+      <div class="msg"><?= $msg ?></div>
+    <?php endif; ?>
 
-    <a href="listing.php" class="btn">⬅ Back to Listing</a>
-    <a href="#" class="btn">Add to Cart</a>
-
-    <div class="reviews">
-      <h3>User Reviews</h3>
-      <div class="review"><strong>⭐️⭐️⭐️⭐️⭐️ John D.</strong><br>Excellent quality racket!</div>
-      <div class="review"><strong>⭐️⭐️⭐️⭐️ Maria L.</strong><br>Very durable and easy to handle.</div>
+    <div class="cart">
+      <strong>Cart:</strong>
+      <?php
+        $cart = $_SESSION['cart'] ?? [];
+        if ($cart) {
+          echo count($cart) . " item(s)";
+        } else {
+          echo "Empty";
+        }
+      ?>
     </div>
+
+    <div class="items-row">
+      <?php foreach ($items as $index => $item): ?>
+        <div class="card">
+          <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>">
+          <div class="item-title"><?= $item['title'] ?></div>
+          <div class="item-desc"><?= $item['description'] ?></div>
+          <div class="item-price"><?= $item['price'] ?></div>
+          <a href="details.php?id=<?= $catId ?>&add=<?= $catId . '-' . $index ?>" class="btn">Add to Cart</a>
+        </div>
+      <?php endforeach; ?>
+    </div>
+    <a href="../ItemList/index.php" class="btn">Back to Categories</a>
   </div>
 </body>
 </html>
