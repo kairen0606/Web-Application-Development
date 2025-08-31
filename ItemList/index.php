@@ -42,7 +42,7 @@ $items = [
         <img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>">
         <h3><?= $item['title'] ?></h3>
         <p><?= $item['description'] ?></p>
-        <a href="details.php?id=<?= $id ?>" class="btn">View Details</a>
+        <a href="../ItemDetails/details.php?id=<?= $id ?>" class="btn">Shop Now</a>
       </div>
     <?php endforeach; ?>
   </div>
