@@ -146,9 +146,7 @@
       color: #666;
     }
 
-    .pr_BG {
-      
-    }
+    
 
     /* Footer */
     footer {
