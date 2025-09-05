@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Effect -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 
 <body>
@@ -16,56 +20,76 @@
     <?php include 'includes/header.php'; ?>
 
     <!-- Hero -->
-<div class="slider-container">
+    <div class="slider-container">
         <div class="slider">
-            <div class="slide">
-                <img src="./img/pr.jpg">
-            </div>
-            <div class="slide">
-                <img src="./img/YonexS.jpg">
-            </div>
-            <div class="slide">
-                <img src="./img/LiningTBS.jpg">
-            </div>
-            <div class="slide">
-                <img src="。/img/_狂徒 S 2.jpg">
-            </div>
-            <div class="slide">
-                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" alt="Northern Lights">
-            </div>
+            <div class="slide"><img src="./img/kranteds.png"></div>
+            <div class="slide"><img src="./img/bag.png"></div>
+            <div class="slide"><img src="./img/harimau.png"></div>
+            <div class="slide"><img src="./img/grid.png"></div>
+            <div class="slide"><img src="./img/ases.png"></div>
         </div>
-        
         <div class="controls">
             <button class="prev-btn">&#10094;</button>
             <button class="next-btn">&#10095;</button>
         </div>
-        
+
         <div class="dots"></div>
-        
+
         <div class="progress-bar">
             <div class="progress"></div>
         </div>
     </div>
 
-  
     <!-- Featured Products -->
     <section class="products">
-        <h2>Featured Products</h2>
+        <div class="products-header animate-on-scroll">
+            <h2>Browse By Sport</h2>
+        </div>
         <div class="product-list">
-            <div class="product">
-                <img src=".jpg" alt="Racket"> // Add actual image path
-                <h3>Racket1</h3>
-                <p>Lightweight & powerful racket for advanced players.</p>
-                <button class="btn">Buy Now</button>
+            <div class="product animate-scale">
+                <img src="./img/badminton.png" alt="Badminton">
+                <h3>Badminton</h3>
+                <div class="product-overlay">
+                    <button class="product-btn">Shop Now</button>
+                </div>
             </div>
-            <div class="product">
-                <img src=".jpg" alt="Shuttlecocks">// Add actual image path
-                <h3>Racket2</h3>
-                <p>Durable feather shuttlecocks for training & tournaments.</p>
-                <button class="btn">Buy Now</button>
+            <div class="product animate-scale">
+                <img src="./img/skirt.png" alt="Skirt">
+                <h3>Skirt</h3>
+                <div class="product-overlay">
+                    <button class="product-btn">Shop Now</button>
+                </div>
+            </div>
+            <div class="product animate-scale">
+                <img src="./img/grid2.png" alt="Grid">
+                <h3>Grid</h3>
+                <div class="product-overlay">
+                    <button class="product-btn">Shop Now</button>
+                </div>
+            </div>
+            <div class="product animate-scale">
+                <img src="./img/bag1.jpg" alt="Badminton">
+                <h3>Bag</h3>
+                <div class="product-overlay">
+                    <button class="product-btn">Shop Now</button>
+                </div>
             </div>
         </div>
     </section>
+
+    <!--New Arrival-->
+    <div class="item-showcase">
+        <div class="item-image animate-left">
+            <img src="./img/item1.png" alt="item">
+        </div>
+
+        <div class="item-info animate-right">
+            <span class="new-arrival-tag">New Arrival</span>
+            <h3>Harimau Series</h3>
+            <p>This is a high-performance badminton racket designed for players who seek both power and speed. Inspired by the strength and agility of the Malayan tiger, the racket features bold tiger-themed aesthetics that reflect dominance and fierceness.</p>
+            <a href="#" class="item-btn">LEARN MORE</a>
+        </div>
+    </div>
 
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
@@ -74,7 +98,8 @@
     </div>
 
     <!-- JavaScript -->
-     <script>
+    <script>
+        // Slider
         document.addEventListener('DOMContentLoaded', function() {
             const slider = document.querySelector('.slider');
             const slides = document.querySelectorAll('.slide');
@@ -82,12 +107,11 @@
             const nextBtn = document.querySelector('.next-btn');
             const dotsContainer = document.querySelector('.dots');
             const progressBar = document.querySelector('.progress');
-            
+
             let currentSlide = 0;
             let slideInterval;
-            const slideDuration = 5000; // 5 seconds per slide
-            
-            // Create dots for navigation
+            const slideDuration = 5000;
+
             slides.forEach((_, i) => {
                 const dot = document.createElement('div');
                 dot.classList.add('dot');
@@ -95,81 +119,68 @@
                 dot.addEventListener('click', () => goToSlide(i));
                 dotsContainer.appendChild(dot);
             });
-            
+
             const dots = document.querySelectorAll('.dot');
-            
-            // Start auto-sliding
+
             startSlideInterval();
-            
-            // Function to go to a specific slide
+
             function goToSlide(n) {
                 currentSlide = n;
                 updateSlider();
                 resetSlideInterval();
             }
-            
-            // Next slide
+
             function nextSlide() {
                 currentSlide = (currentSlide + 1) % slides.length;
                 updateSlider();
                 resetSlideInterval();
             }
-            
-            // Previous slide
+
             function prevSlide() {
                 currentSlide = (currentSlide - 1 + slides.length) % slides.length;
                 updateSlider();
                 resetSlideInterval();
             }
-            
-            // Update slider position and active dot
+
             function updateSlider() {
                 slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-                
-                // Update active dot
+
                 dots.forEach((dot, i) => {
                     dot.classList.toggle('active', i === currentSlide);
                 });
-                
-                // Reset progress bar
+
                 progressBar.style.width = '0%';
             }
-            
-            // Start the auto-slide interval
+
             function startSlideInterval() {
                 slideInterval = setInterval(nextSlide, slideDuration);
-                
-                // Animate progress bar
+
                 progressBar.style.width = '0%';
                 setTimeout(() => {
                     progressBar.style.width = '100%';
                 }, 10);
-                
+
                 progressBar.style.transition = `width ${slideDuration}ms linear`;
             }
-            
-            // Reset the interval when user interacts
+
             function resetSlideInterval() {
                 clearInterval(slideInterval);
                 startSlideInterval();
             }
-            
-            // Event listeners for buttons
+
             nextBtn.addEventListener('click', nextSlide);
             prevBtn.addEventListener('click', prevSlide);
-            
-            // Pause on hover
+
             const sliderContainer = document.querySelector('.slider-container');
             sliderContainer.addEventListener('mouseenter', () => {
                 clearInterval(slideInterval);
                 progressBar.style.transition = 'none';
             });
-            
+
             sliderContainer.addEventListener('mouseleave', () => {
                 resetSlideInterval();
             });
-            
-            // Keyboard navigation
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') {
                     prevSlide();
@@ -177,31 +188,62 @@
                     nextSlide();
                 }
             });
-            
-            // Touch swipe support for mobile devices
+
             let touchStartX = 0;
             let touchEndX = 0;
-            
+
             sliderContainer.addEventListener('touchstart', e => {
                 touchStartX = e.changedTouches[0].screenX;
             }, false);
-            
+
             sliderContainer.addEventListener('touchend', e => {
                 touchEndX = e.changedTouches[0].screenX;
                 handleSwipe();
             }, false);
-            
+
             function handleSwipe() {
                 const minSwipeDistance = 50;
-                
+
                 if (touchStartX - touchEndX > minSwipeDistance) {
-                    // Swipe left - next slide
                     nextSlide();
                 } else if (touchEndX - touchStartX > minSwipeDistance) {
-                    // Swipe right - previous slide
                     prevSlide();
                 }
             }
+        });
+
+        // Function to check if element is in viewport
+         function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight * 0.9) &&
+                rect.bottom >= (window.innerHeight * 0.1)
+            );
+        }
+
+        // Function to handle scroll animation
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.animate-on-scroll, .animate-left, .animate-right, .animate-scale');
+
+            elements.forEach(element => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                } else {
+                    element.classList.remove('visible');
+                }
+            });
+        }
+
+        // Initialize animation state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            handleScrollAnimation();
+
+            // Add event listener with debouncing for performance
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(handleScrollAnimation, 50);
+            });
         });
     </script>
 </body>
