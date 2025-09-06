@@ -91,6 +91,20 @@
         </div>
     </div>
 
+    <div class="item-showcase">
+        <div class="item-info animate-right">
+            <span class="new-arrival-tag">New Arrival</span>
+            <h3>Harimau Series</h3>
+            <p>This is a high-performance badminton racket designed for players who seek both power and speed. Inspired by the strength and agility of the Malayan tiger, the racket features bold tiger-themed aesthetics that reflect dominance and fierceness.</p>
+            <a href="#" class="item-btn">LEARN MORE</a>
+        </div>
+
+        <div class="item-image animate-left">
+            <img src="./img/item1.png" alt="item">
+        </div>
+
+    </div>
+
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
     <div class="copyright">
