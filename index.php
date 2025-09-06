@@ -22,11 +22,11 @@
     <!-- Hero -->
     <div class="slider-container">
         <div class="slider">
-            <div class="slide"><img src="./img/kranteds.png"></div>
-            <div class="slide"><img src="./img/bag.png"></div>
-            <div class="slide"><img src="./img/harimau.png"></div>
-            <div class="slide"><img src="./img/grid.png"></div>
-            <div class="slide"><img src="./img/ases.png"></div>
+            <div class="slide"><img src="./img/slider1.png"></div>
+            <div class="slide"><img src="./img/slider2.png"></div>
+            <div class="slide"><img src="./img/slider3.png"></div>
+            <div class="slide"><img src="./img/slider4.png"></div>
+            <div class="slide"><img src="./img/slider5.png"></div>
         </div>
         <div class="controls">
             <button class="prev-btn">&#10094;</button>
@@ -47,21 +47,21 @@
         </div>
         <div class="product-list">
             <div class="product animate-scale">
-                <img src="./img/badminton.png" alt="Badminton">
-                <h3>Badminton</h3>
+                <img src="./img/racket1.png" alt="Badminton">
+                <h3>Racket</h3>
                 <div class="product-overlay">
-                    <button class="product-btn">Shop Now</button>
+                    <button class="product-btn" onclick="">Shop Now</button>
                 </div>
             </div>
             <div class="product animate-scale">
-                <img src="./img/skirt.png" alt="Skirt">
+                <img src="./img/skirt1.png" alt="Skirt">
                 <h3>Skirt</h3>
                 <div class="product-overlay">
                     <button class="product-btn">Shop Now</button>
                 </div>
             </div>
             <div class="product animate-scale">
-                <img src="./img/grid2.png" alt="Grid">
+                <img src="./img/grid1.png" alt="Grid">
                 <h3>Grid</h3>
                 <div class="product-overlay">
                     <button class="product-btn">Shop Now</button>
@@ -80,7 +80,7 @@
     <!--New Arrival-->
     <div class="item-showcase">
         <div class="item-image animate-left">
-            <img src="./img/item1.png" alt="item">
+            <img src="./img/item.png" alt="item">
         </div>
 
         <div class="item-info animate-right">
@@ -100,7 +100,7 @@
         </div>
 
         <div class="item-image animate-right">
-            <img src="./img/new.png" alt="item">
+            <img src="./img/new1.png" alt="item">
         </div>
 
     </div>

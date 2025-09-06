@@ -45,7 +45,7 @@
       </div>
 
       <div class="form-actions">
-        <a href="register.html" class="register-link">Register</a>
+        <a href="Register.php" class="register-link">Register</a>
         <button type="submit" class="login-btn">Login</button>
       </div>
     </form>
