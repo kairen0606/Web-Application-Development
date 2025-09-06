@@ -121,7 +121,6 @@ nav a {
 
 /* Slider Section */
 .slider-container {
-  padding: 80px 0;
   width: 100%;
   border-radius: 15px;
   overflow: hidden;
@@ -132,7 +131,7 @@ nav a {
 .slider {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  height: 600px;
+  height: 800px;
 }
 
 .slide {
@@ -384,35 +383,35 @@ nav a {
 }
 
 /* Animation classes */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease-out;
-        }
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-out;
+}
 
-        .animate-scale {
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.8s ease-out;
-        }
+.animate-scale {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s ease-out;
+}
 
-        .animate-left {
-            opacity: 0;
-            transform: translateX(-100px);
-            transition: all 0.8s ease-out;
-        }
-        
-        .animate-right {
-            opacity: 0;
-            transform: translateX(100px);
-            transition: all 0.8s ease-out;
-        }
-        
-        /* Visible state */
-        .visible {
-            opacity: 1;
-            transform: translate(0) scale(1) rotate(0);
-        }
+.animate-left {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.8s ease-out;
+}
+
+.animate-right {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.8s ease-out;
+}
+
+/* Visible state */
+.visible {
+  opacity: 1;
+  transform: translate(0) scale(1) rotate(0);
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
@@ -434,72 +433,74 @@ nav a {
 
 /* New item */
 .item-showcase {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            align-items: center;
-            margin: 60px;
-        }
-        
-        .item-image {
-            flex: 1;
-            min-width: 300px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .item-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        .item-info {
-            flex: 1;
-            min-width: 300px;
-        }
-        
-        .new-arrival-tag{
-           display: inline-block;
-  background-color: #003c79; 
-  color: #ffffff;            
-  font-size: 12px;           
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: center;
+  margin: 60px;
+}
+
+.item-image {
+  flex: 1;
+  min-width: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.item-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 300px;
+
+}
+
+.new-arrival-tag {
+  display: inline-block;
+  background-color: #003c79;
+  color: #ffffff;
+  font-size: 12px;
   font-weight: bold;
-  text-transform: uppercase; 
-  padding: 4px 10px;         
-  border-radius: 2px;        
-  letter-spacing: 1px;  
-        }
-        .item-info h3 {
-            font-size: 2rem;
-            margin: 20px 0 20px;
-            color: black;
-        }
-        
-        .item-info p {
-          color:#555;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-        
-        .item-btn {
-            display: inline-block;
-            background: black;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .item-btn:hover {
-            background: #8a1919;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(178, 31, 31, 0.3);
-        }
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+
+.item-info h3 {
+  font-size: 2rem;
+  margin: 20px 0 20px;
+  color: black;
+}
+
+.item-info p {
+  color: #555;
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.item-btn {
+  display: inline-block;
+  background: black;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.item-btn:hover {
+  background: linear-gradient(to right, #3498db, #2ecc71);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(178, 31, 31, 0.3);
+}
 
 /* Footer */
 footer {

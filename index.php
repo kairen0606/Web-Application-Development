@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PR ing - Badminton Store</title>
+    <title>PR ind - Badminton Store</title>
 
     <link rel="stylesheet" href="Styles/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
@@ -92,15 +92,15 @@
     </div>
 
     <div class="item-showcase">
-        <div class="item-info animate-right">
-            <span class="new-arrival-tag">New Arrival</span>
-            <h3>Harimau Series</h3>
-            <p>This is a high-performance badminton racket designed for players who seek both power and speed. Inspired by the strength and agility of the Malayan tiger, the racket features bold tiger-themed aesthetics that reflect dominance and fierceness.</p>
+        <div class="item-info animate-left">
+            <span class="new-arrival-tag" style="text-align:right">Comming Soon</span>
+            <h3>Pickle Ball Racket</h3>
+            <p>This is a P.R IND (Purui) Lustre Fruit Series** pickleball paddle, featuring multiple colorful designs with fruit-themed patterns.</p>
             <a href="#" class="item-btn">LEARN MORE</a>
         </div>
 
-        <div class="item-image animate-left">
-            <img src="./img/item1.png" alt="item">
+        <div class="item-image animate-right">
+            <img src="./img/new.png" alt="item">
         </div>
 
     </div>
