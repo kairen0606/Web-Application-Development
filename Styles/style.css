@@ -131,7 +131,7 @@ nav a {
 .slider {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  height: 800px;
+  height: 750px;
 }
 
 .slide {
@@ -552,10 +552,9 @@ footer {
   text-decoration: underline;
 }
 
-.footer-left .logo {
+.footer-left {
   width: 100px;
   height: 80px;
-  background-image: url('../img/logo.jpg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

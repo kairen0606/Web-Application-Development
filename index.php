@@ -40,42 +40,84 @@
         </div>
     </div>
 
-    <!-- Featured Products -->
-    <section class="products">
-        <div class="products-header animate-on-scroll">
-            <h2>Browse By Sport</h2>
-        </div>
-        <div class="product-list">
-            <div class="product animate-scale">
-                <img src="./img/racket1.png" alt="Badminton">
-                <h3>Racket</h3>
-                <div class="product-overlay">
-                    <button class="product-btn" onclick="">Shop Now</button>
-                </div>
-            </div>
-            <div class="product animate-scale">
-                <img src="./img/skirt1.png" alt="Skirt">
-                <h3>Skirt</h3>
-                <div class="product-overlay">
-                    <button class="product-btn">Shop Now</button>
-                </div>
-            </div>
-            <div class="product animate-scale">
-                <img src="./img/grid1.png" alt="Grid">
-                <h3>Grid</h3>
-                <div class="product-overlay">
-                    <button class="product-btn">Shop Now</button>
-                </div>
-            </div>
-            <div class="product animate-scale">
-                <img src="./img/bag1.jpg" alt="Badminton">
-                <h3>Bag</h3>
-                <div class="product-overlay">
-                    <button class="product-btn">Shop Now</button>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- Featured Products -->
+<section class="products">
+    <div class="products-header animate-on-scroll">
+        <h2>Browse By Category</h2>
+    </div>
+    <div class="product-list">
+        <?php
+        // Database connection
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "pr_ind_db";
+        
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        
+        // Fetch only 4 categories from database to show in one row
+        $sql = "SELECT categoryID, name, description FROM Categories LIMIT 4";
+        $result = $conn->query($sql);
+        
+        if ($result && $result->num_rows > 0) {
+            // Output data of each row
+            while($row = $result->fetch_assoc()) {
+                echo '<div class="product animate-scale">';
+                
+                // Set appropriate image based on category
+                $imagePath = "";
+                $categoryName = strtolower($row['name']);
+                
+                if ($categoryName === 'racket') {
+                    $imagePath = './img/racket1.png';
+                } elseif ($categoryName === 'clothes') {
+                    $imagePath = './img/clothes1.png';
+                } elseif ($categoryName === 'grip') {
+                    $imagePath = './img/grid1.png';
+                } elseif ($categoryName === 'bag') {
+                    $imagePath = './img/bag1.png';
+                } else {
+                    // Default image if category doesn't match
+                    $imagePath = 'https://source.unsplash.com/random/300x200/?badminton,' . urlencode($row['name']);
+                }
+                
+                echo '<img src="' . $imagePath . '" alt="' . htmlspecialchars($row['name']) . '">';
+                echo '<h3>' . $row['name'] . '</h3>';
+                echo '<div class="product-overlay">';
+                echo '<a href="./Pages/product.php?category=' . $row['categoryID'] . '" class="product-btn">Shop Now</a>';
+                echo '</div>';
+                echo '</div>';
+            }
+        } else {
+            // Fallback to hardcoded categories if database is empty
+            $fallbackCategories = [
+                ['id' => 1, 'name' => 'Racket', 'image' => './img/racket1.png'],
+                ['id' => 2, 'name' => 'Clothes', 'image' => './img/clothes1.png'],
+                ['id' => 3, 'name' => 'Grip', 'image' => './img/grid1.png'],
+                ['id' => 4, 'name' => 'Bag', 'image' => './img/bag1.png']
+            ];
+            
+            foreach ($fallbackCategories as $category) {
+                echo '<div class="product animate-scale">';
+                echo '<img src="' . $category['image'] . '" alt="' . $category['name'] . '">';
+                echo '<h3>' . $category['name'] . '</h3>';
+                echo '<div class="product-overlay">';
+                echo '<a href="../Pages/product.php?category=' . $category['id'] . '" class="product-btn">Shop Now</a>';
+                echo '</div>';
+                echo '</div>';
+            }
+        }
+        
+        $conn->close();
+        ?>
+    </div>
+</section>
 
     <!--New Arrival-->
     <div class="item-showcase">
@@ -259,6 +301,11 @@
                 scrollTimeout = setTimeout(handleScrollAnimation, 50);
             });
         });
+
+        // Function to view products by category
+    function viewCategory(categoryId) {
+        window.location.href = '../Pages/product.php?category=' + categoryId;
+    }
     </script>
 </body>
 

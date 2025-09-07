@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - PR ind Badminton Store</title>
+    <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
     <style>
         * {
             margin: 0;
@@ -23,59 +23,8 @@
         
         .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 100px auto 50px;
             padding: 20px;
-        }
-        
-        /* Header Styles */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #e63946;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 25px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #e63946;
-        }
-        
-        .icons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .icons i {
-            font-size: 20px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        
-        .icons i:hover {
-            color: #e63946;
         }
         
         /* Filter Section */
@@ -225,6 +174,8 @@
             cursor: pointer;
             font-weight: 600;
             transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
         
         .product-btn:hover {
@@ -255,82 +206,12 @@
             border-color: #1d3557;
         }
         
-        /* Footer */
-        .footer {
-            background-color: #1d3557;
-            color: white;
-            padding: 40px 0 20px;
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-bottom: 30px;
-        }
-        
-        .footer-section {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .footer-section h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: #e63946;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #f1faee;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #e63946;
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-icons a {
-            color: white;
-            font-size: 20px;
-            transition: color 0.3s;
-        }
-        
-        .social-icons a:hover {
-            color: #e63946;
-        }
-        
-        .copyright {
+        .no-products {
+            grid-column: 1 / -1;
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #457b9d;
-            font-size: 14px;
+            padding: 40px;
+            font-size: 18px;
+            color: #6c757d;
         }
         
         /* Responsive Design */
@@ -344,24 +225,11 @@
             .product-list {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
-            
-            .nav-links {
-                display: none;
-            }
-        }
-        
-        .no-products {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            font-size: 18px;
-            color: #6c757d;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-
+    <?php include '../includes/header.php'; ?>
 
     <div class="container">
         <!-- Category Navigation -->
@@ -399,8 +267,8 @@
             <?php
             // Database connection
             $servername = "localhost";
-            $username = "root"; // Change if needed
-            $password = ""; // Change if needed
+            $username = "root";
+            $password = "";
             $dbname = "pr_ind_db";
             
             // Create connection
@@ -414,14 +282,14 @@
             // Get category filter from URL if set
             $categoryFilter = isset($_GET['category']) ? $_GET['category'] : 'all';
             
-            // Build SQL query - fixed to only use valid category IDs (1-4)
+            // Build SQL query - FIXED: Removed image_type condition
             $sql = "SELECT p.productID, p.name, p.description, p.price, p.colour, 
                            c.name as category_name, c.categoryID,
                            pi.image_url 
                     FROM Products p 
                     JOIN Categories c ON p.categoryID = c.categoryID 
                     LEFT JOIN ProductImages pi ON p.productID = pi.productID 
-                    WHERE pi.image_type = 'Front' OR pi.image_type IS NULL";
+                    WHERE 1=1"; // Removed image_type condition
             
             if ($categoryFilter != 'all') {
                 $sql .= " AND p.categoryID = " . intval($categoryFilter);
@@ -430,19 +298,24 @@
             $sql .= " GROUP BY p.productID ORDER BY p.productID";
             
             $result = $conn->query($sql);
-
-            
             
             if ($result && $result->num_rows > 0) {
                 // Output data of each row
                 while($row = $result->fetch_assoc()) {
                     echo '<div class="product animate-scale" data-category="' . $row['category_name'] . '" data-price="' . $row['price'] . '" data-name="' . htmlspecialchars($row['name']) . '">';
-$image_url = "https://source.unsplash.com/random/300x200/?badminton," . urlencode($row['category_name']);
-echo '<img src="' . $image_url . '" alt="' . htmlspecialchars($row['name']) . '">';                    echo '<div class="product-category">' . $row['category_name'] . '</div>';
+                    
+                    // Use actual image if available, otherwise placeholder
+                    if (!empty($row['image_url'])) {
+                        echo '<img src="' . $row['image_url'] . '" alt="' . htmlspecialchars($row['name']) . '">';
+                    } else {
+                        echo '<img src="https://source.unsplash.com/random/300x200/?badminton,' . urlencode($row['category_name']) . '" alt="' . htmlspecialchars($row['name']) . '">';
+                    }
+                    
+                    echo '<div class="product-category">' . $row['category_name'] . '</div>';
                     echo '<h3>' . $row['name'] . '</h3>';
                     echo '<div class="product-price">RM ' . number_format($row['price'], 2) . '</div>';
                     echo '<div class="product-overlay">';
-                    echo '<button class="product-btn" onclick="viewProduct(' . $row['productID'] . ')">View Details</button>';
+                    echo '<a href="product_detail.php?id=' . $row['productID'] . '" class="product-btn">View Details</a>';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -460,42 +333,10 @@ echo '<img src="' . $image_url . '" alt="' . htmlspecialchars($row['name']) . '"
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>About Us</h3>
-                    <p>PR ind is a premium badminton equipment store providing high-quality products for players of all levels.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="#">Products</a></li>
-                        <li><a href="#">Collections</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact Info</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Sport Street, Kuala Lumpur</p>
-                    <p><i class="fas fa-phone"></i> +60 12 345 6789</p>
-                    <p><i class="fas fa-envelope"></i> info@prind.com</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>© 2025 PR ind. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <?php include '../includes/footer.php'; ?>
+    <div class="copyright">
+        <p>© 2025 PR ind. All rights reserved.</p>
+    </div>
 
     <script>
         // Category filter event listeners
@@ -504,7 +345,7 @@ echo '<img src="' . $image_url . '" alt="' . htmlspecialchars($row['name']) . '"
             button.addEventListener('click', function() {
                 const categoryId = this.getAttribute('data-category');
                 // Redirect to the same page with category filter
-                window.location.href = 'products.php?category=' + categoryId;
+                window.location.href = 'product.php?category=' + categoryId;
             });
         });
         
@@ -564,11 +405,6 @@ echo '<img src="' . $image_url . '" alt="' . htmlspecialchars($row['name']) . '"
                 default:
                     return productsToSort;
             }
-        }
-        
-        // Function to view product details
-        function viewProduct(productId) {
-            window.location.href = 'product_detail.php?id=' + productId;
         }
         
         // Initialize animation for product cards

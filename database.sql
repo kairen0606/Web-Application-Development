@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS Users (
 CREATE TABLE IF NOT EXISTS Categories (
     categoryID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    description TEXT
+    description TEXT,
+    UNIQUE KEY unique_category_name (name)
 );
 
 -- Products Table
@@ -27,7 +28,8 @@ CREATE TABLE IF NOT EXISTS Products (
     price DECIMAL(13,2) NOT NULL,
     categoryID INT,
     colour VARCHAR(20),
-    FOREIGN KEY (categoryID) REFERENCES Categories(categoryID)
+    FOREIGN KEY (categoryID) REFERENCES Categories(categoryID),
+    UNIQUE KEY unique_product_name (name)
 );
 
 -- Product Images
@@ -35,9 +37,9 @@ CREATE TABLE IF NOT EXISTS ProductImages (
     imageID INT AUTO_INCREMENT PRIMARY KEY,
     productID INT,
     image_url VARCHAR(255) NOT NULL,
-    FOREIGN KEY (productID) REFERENCES Products(productID)
+    FOREIGN KEY (productID) REFERENCES Products(productID),
+    UNIQUE KEY unique_image_url (image_url)
 );
-
 
 -- Product Variants
 CREATE TABLE IF NOT EXISTS ProductVariants (
@@ -78,28 +80,39 @@ CREATE TABLE IF NOT EXISTS OrderItems (
     FOREIGN KEY (variantID) REFERENCES ProductVariants(variantID)
 );
 
--- Ratings Table
-CREATE TABLE IF NOT EXISTS Ratings (
-    ratingID INT AUTO_INCREMENT PRIMARY KEY,
-    orderID INT,
-    productID INT,
-    userID INT,
-    rating INT CHECK (rating BETWEEN 1 AND 5),
-    review TEXT,
-    FOREIGN KEY (orderID) REFERENCES Orders(orderID),
+-- Cart
+CREATE TABLE IF NOT EXISTS Cart (
+    cartID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT NOT NULL,
+    productID INT NOT NULL,
+    variantID INT,
+    quantity INT NOT NULL DEFAULT 1,
+    added_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userID) REFERENCES Users(userID),
     FOREIGN KEY (productID) REFERENCES Products(productID),
-    FOREIGN KEY (userID) REFERENCES Users(userID)
+    FOREIGN KEY (variantID) REFERENCES ProductVariants(variantID)
+);
+
+-- Wish List
+CREATE TABLE IF NOT EXISTS Wishlist (
+    wishlistID INT AUTO_INCREMENT PRIMARY KEY,
+    userID INT NOT NULL,
+    productID INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userID) REFERENCES Users(userID),
+    FOREIGN KEY (productID) REFERENCES Products(productID),
+    UNIQUE KEY unique_wishlist (userID, productID)
 );
 
 -- Insert Categories
-INSERT INTO Categories (name, description) VALUES
+INSERT IGNORE INTO Categories (name, description) VALUES
 ('Racket', 'Badminton rackets of various types and specifications'),
 ('Clothes', 'Sports clothes for badminton players'),
 ('Grip', 'Badminton equipment and accessories'),
 ('Bag', 'Sports bags for carrying equipment');
 
--- Insert Products (categoryID corrected)
-INSERT INTO Products (name, description, price, categoryID, colour) VALUES
+-- Insert Products
+INSERT IGNORE INTO Products (name, description, price, categoryID, colour) VALUES
 ('Racket Kranted A', 'High-performance badminton racket.', 299.90, 1, NULL),
 ('Racket Kranted S', 'Colorful pickleball paddle.', 199.90, 1, NULL),
 ('Racket 8023', 'Comfortable and flexible skirt.', 89.90, 1, NULL),
@@ -133,13 +146,11 @@ INSERT INTO Products (name, description, price, categoryID, colour) VALUES
 ('G Keel Overgrip Orange', 'Grip for badminton.', 159.90, 3, 'Orange');
 
 -- Product Variants
-INSERT INTO ProductVariants (productID, size, weight, grip_size, stock) VALUES
--- Rackets
+INSERT IGNORE INTO ProductVariants (productID, size, weight, grip_size, stock) VALUES
 (1, '3U', '85-89g', 'G4', 20),
 (1, '4U', '80-84g', 'G5', 15),
 (2, NULL, '250g', 'Standard', 30),
 (4, 'Standard', NULL, NULL, 10),
--- Bags
 (5, NULL, NULL, NULL, 20),
 (6, NULL, NULL, NULL, 20),
 (7, NULL, NULL, NULL, 20),
@@ -154,34 +165,37 @@ INSERT INTO ProductVariants (productID, size, weight, grip_size, stock) VALUES
 (16, NULL, NULL, NULL, 20),
 (17, NULL, NULL, NULL, 20),
 (18, NULL, NULL, NULL, 20),
--- Clothes
 (19, 'S', NULL, NULL, 20),
 (19, 'M', NULL, NULL, 20),
 (19, 'L', NULL, NULL, 15),
 (20, 'S', NULL, NULL, 20),
 (20, 'M', NULL, NULL, 20),
 (20, 'L', NULL, NULL, 15),
--- Grips
 (25, NULL, NULL, NULL, 50),
 (26, NULL, NULL, NULL, 50),
 (27, NULL, NULL, NULL, 50),
 (28, NULL, NULL, NULL, 50);
 
 -- Product Images
-INSERT INTO ProductImages (productID, image_url) VALUES
+INSERT IGNORE INTO ProductImages (productID, image_url) VALUES
 (1,'../img/racket1.png'),
 (2,'../img/racket2.png'),
 (3,'../img/racket3.png'),
 (4,'../img/racket4.png'),
-(5,'../img/bag1.png'),
-(6,'../img/bag2.png'),
-(7,'../img/bag3.png'),
-(8,'../img/bag4.png'),
-(9,'../img/bag5.png'),
-(10,'../img/bag6.png'),
-(11,'../img/bag7.png'),
-(12,'../img/bag8.png'),
-(13,'../img/bag9.png'),
+(5,'../img/racket5.png'),
+(6,'../img/racket6.png'),
+(7,'../img/racket7.png'),
+(8,'../img/racket8.png'),
+(9,'../img/racket9.png'),
+(10,'../img/bag1.png'),
+(11,'../img/bag2.png'),
+(12,'../img/bag3.png'),
+(13,'../img/bag4.png'),
+(14,'../img/bag5.png'),
+(15,'../img/bag6.png'),
+(16,'../img/bag7.png'),
+(17,'../img/bag8.png'),
+(18,'../img/bag9.png'),
 (19,'../img/clothes1.png'),
 (20,'../img/clothes2.png'),
 (21,'../img/clothes3.png'),
@@ -192,5 +206,3 @@ INSERT INTO ProductImages (productID, image_url) VALUES
 (26,'../img/grid2.png'),
 (27,'../img/grid3.png'),
 (28,'../img/grid4.png');
-
-
