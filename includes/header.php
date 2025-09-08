@@ -1,7 +1,7 @@
 <?php
-session_start();
-// Debug: Remove in production
-var_dump($_SESSION);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 <header class="header">
@@ -23,7 +23,7 @@ var_dump($_SESSION);
         <a href="/Web-Application-Development"><i class="fa-solid fa-house"></i></a>
         <?php if (isset($_SESSION['user_email'])): ?>
                 <!-- Redirect to Cart if logged in -->
-                <a href="/Web-Application-Development/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="/Web-Application-Development/Pages/cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
             <?php else: ?>
                 <!-- Redirect to Login if not logged in -->
                 <a href="/Web-Application-Development/user/login.php" onclick="alert('Please log in to access your cart.');"><i class="fa-solid fa-cart-shopping"></i></a>

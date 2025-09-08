@@ -5,6 +5,12 @@
     font-family: 'Figtree', sans-serif;
 }
 
+body{
+    padding-top:100px;
+    background: #f9f9f9;
+    color: #333;
+}
+
 /*============== Login Page and Sign Up Page ================ */
 .authentication-heading{
     margin: 40px 0 40px;

@@ -1,5 +1,6 @@
 /* =================== General Layout =============== */
 .container {
+    padding-top:100px;
     display: flex;
     height: auto;
 }
