@@ -115,37 +115,39 @@ INSERT IGNORE INTO Categories (name, description) VALUES
 
 -- Insert Products
 INSERT IGNORE INTO Products (name, description, price, categoryID, colour) VALUES
-('Racket Kranted A', 'High-performance badminton racket.', 299.90, 1, NULL),
-('Racket Kranted S', 'Colorful pickleball paddle.', 199.90, 1, NULL),
-('Racket 8023', 'Comfortable and flexible skirt.', 89.90, 1, NULL),
-('Racket Meteor', 'Professional grade badminton net.', 129.90, 1, NULL),
-('Racket Aerospace White', 'Spacious bag for rackets.', 159.90, 1, 'White'),
-('Racket Aerospace Black', 'Spacious bag for rackets.', 159.90, 1, 'Black'),
-('Racket Ultra Seraph 5th Years Blue', 'Spacious bag.', 159.90, 1, 'Blue'),
-('Racket Ultra Seraph 5th Years White', 'Spacious bag.', 159.90, 1, 'White'),
-('Racket Ultra Seraph 5th Years Red White', 'Spacious bag.', 159.90, 1, 'Red/White'),
+('Racket Kranted A', 'High-performance badminton racket designed for speed, power, and precision.', 299.90, 1, NULL),
+('Racket Kranted S', 'A lightweight, colorful pickleball paddle built for fun and competitive play.', 199.90, 1, NULL),
+('Racket 8023', 'Durable badminton racket offering flexibility and comfort for all playing levels.', 89.90, 1, NULL),
+('Racket Meteor', 'Professional-grade badminton racket engineered for control and consistency.', 129.90, 1, NULL),
+('Racket Aerospace White', 'Spacious racket bag with secure compartments, perfect for travel and tournaments.', 159.90, 1, 'White'),
+('Racket Aerospace Black', 'Large-capacity racket bag offering durability and stylish design.', 159.90, 1, 'Black'),
+('Racket Ultra Seraph 5th Years Blue', 'Special edition sports bag with roomy storage and sleek design.', 159.90, 1, 'Blue'),
+('Racket Ultra Seraph 5th Years White', 'Limited edition racket bag with ample space and a clean look.', 159.90, 1, 'White'),
+('Racket Ultra Seraph 5th Years Red White', 'Two-tone racket bag combining functionality with modern style.', 159.90, 1, 'Red/White'),
 
-('P.R IND Large Capacity Sports Bag White', 'Spacious bag.', 159.90, 4, 'White'),
-('P.R IND Large Capacity Sports Bag Blue', 'Spacious bag.', 159.90, 4, 'Blue'),
-('C4 Multi Functional Backpack FengXin Violet', 'Spacious bag.', 159.90, 4, 'Violet'),
-('C4 Multi Functional Backpack Orange-Blue', 'Spacious bag.', 159.90, 4, 'Orange/Blue'),
-('Leisure Sport Backpack White', 'Spacious bag.', 159.90, 4, 'White'),
-('Dragon Year Sport Satchel Black', 'Spacious bag.', 159.90, 4, 'Black'),
-('Dragon Year Sport Satchel White', 'Spacious bag.', 159.90, 4, 'White'),
-('P.R IND Badminton Backpack Black White', 'Spacious bag.', 159.90, 4, 'Black/White'),
-('P.R IND Badminton Backpack Dark Grey', 'Spacious bag.', 159.90, 4, 'Dark Grey'),
 
-('PK777 Tee Black-White', 'Comfortable sports tee.', 159.90, 2, 'Black/White'),
-('PK777 Tee Black-Blue', 'Comfortable sports tee.', 159.90, 2, 'Black/Blue'),
-('P.R Gold Label Logo Tee White', 'Comfortable sports tee.', 159.90, 2, 'White'),
-('P.R Gold Label Logo Tee Black', 'Comfortable sports tee.', 159.90, 2, 'Black'),
-('Kaleidoscope Plus Tee Pink', 'Comfortable sports tee.', 159.90, 2, 'Pink'),
-('Kaleidoscope Plus Tee Yellow', 'Comfortable sports tee.', 159.90, 2, 'Yellow'),
+('P.R IND Large Capacity Sports Bag White', 'Extra-large sports bag with multiple compartments for gear and accessories.', 159.90, 4, 'White'),
+('P.R IND Large Capacity Sports Bag Blue', 'Spacious and durable sports bag designed to carry all essentials.', 159.90, 4, 'Blue'),
+('C4 Multi Functional Backpack FengXin Violet', 'Trendy multifunctional backpack with smart compartments for everyday and sports use.', 159.90, 4, 'Violet'),
+('C4 Multi Functional Backpack Orange-Blue', 'Stylish dual-tone backpack offering comfort, durability, and storage space.', 159.90, 4, 'Orange/Blue'),
+('Leisure Sport Backpack White', 'Lightweight sports backpack with roomy storage and a clean design.', 159.90, 4, 'White'),
+('Dragon Year Sport Satchel Black', 'Compact satchel bag with sporty design, perfect for daily training.', 159.90, 4, 'Black'),
+('Dragon Year Sport Satchel White', 'Modern sport satchel with a spacious interior and sleek finish.', 159.90, 4, 'White'),
+('P.R IND Badminton Backpack Black White', 'Stylish badminton backpack with padded straps and smart compartments.', 159.90, 4, 'Black/White'),
+('P.R IND Badminton Backpack Dark Grey', 'Durable sports backpack in dark grey, offering functionality and comfort.', 159.90, 4, 'Dark Grey'),
 
-('7C Grips Fluorescent Green', 'Grip for badminton.', 159.90, 3, 'Fluorescent Green'),
-('7C Grips Green', 'Grip for badminton.', 159.90, 3, 'Green'),
-('7C Grips Yellow', 'Grip for badminton.', 159.90, 3, 'Yellow'),
-('G Keel Overgrip Orange', 'Grip for badminton.', 159.90, 3, 'Orange');
+
+('PK777 Tee Black-White', 'Breathable and comfortable sports tee with a classic black-white design.', 159.90, 2, 'Black/White'),
+('PK777 Tee Black-Blue', 'Lightweight sports tee in black-blue, perfect for training and casual wear.', 159.90, 2, 'Black/Blue'),
+('P.R Gold Label Logo Tee White', 'Premium sports tee with gold label branding, soft and stylish.', 159.90, 2, 'White'),
+('P.R Gold Label Logo Tee Black', 'Classic black tee with gold label design, offering comfort and style.', 159.90, 2, 'Black'),
+('Kaleidoscope Plus Tee Pink', 'Vibrant pink sports tee with a modern fit for comfort and performance.', 159.90, 2, 'Pink'),
+('Kaleidoscope Plus Tee Yellow', 'Bright yellow tee with breathable fabric, ideal for both sports and casual wear.', 159.90, 2, 'Yellow'),
+
+('7C Grips Fluorescent Green', 'High-quality badminton grip in fluorescent green for extra comfort and control.', 159.90, 3, 'Fluorescent Green'),
+('7C Grips Green', 'Durable badminton grip in green, designed to enhance your hold and stability.', 159.90, 3, 'Green'),
+('7C Grips Yellow', 'Soft and sweat-absorbent grip in yellow, improving play comfort.', 159.90, 3, 'Yellow'),
+('G Keel Overgrip Orange', 'Premium overgrip in orange, offering a secure feel and reliable performance.', 159.90, 3, 'Orange');
 
 -- Product Variants
 INSERT IGNORE INTO ProductVariants (productID, size, weight, grip_size, stock) VALUES
