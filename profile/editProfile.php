@@ -31,8 +31,8 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     <title>Edit Profile</title>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style/profile.css">
-    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../Styles/profile.css">
+    <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     <style>
         .error { color: red; font-size: 0.9em; margin-top: 2px; }

@@ -85,8 +85,8 @@ foreach ($defaultStats['colors'] as $color => $count) {
     <title>Overall Statistic</title>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style/profile.css">
-    <link rel="stylesheet" href="../style/styles.css">
+    <link rel="stylesheet" href="../Styles/profile.css">
+    <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
