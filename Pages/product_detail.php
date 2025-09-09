@@ -165,18 +165,20 @@ $conn->close();
     <?php include '../includes/header.php'; ?>
 
     <div class="container">
-        <!-- Alert Messages -->
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['cart_message'])): ?>
-            <div class="alert alert-success"><?php echo $_SESSION['cart_message']; unset($_SESSION['cart_message']); ?></div>
-        <?php endif; ?>
+        <div class="alert-container">
+            <!-- Alert Messages -->
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success"><?php echo $_SESSION['success']; unset($_SESSION['success']); ?></div>
+            <?php endif; ?>
+            
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-error"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+            <?php endif; ?>
+            
+            <?php if (isset($_SESSION['cart_message'])): ?>
+                <div class="alert alert-success"><?php echo $_SESSION['cart_message']; unset($_SESSION['cart_message']); ?></div>
+            <?php endif; ?>
+        </div>
 
         <!-- Breadcrumb Navigation -->
         <div class="breadcrumb">

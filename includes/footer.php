@@ -5,7 +5,6 @@
     <div class="footer-center">
       <h3>About Us</h3>
       <a href="../about-us/our_story.php">Our brand</a>
-      <a href="#services">Services</a>
       <a href="../about-us/contact_us.php">Contact Us</a>
     </div>
     

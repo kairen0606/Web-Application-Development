@@ -26,6 +26,8 @@ $cartItems = [];
 $itemsTotal = 0;
 $shipping = 0;
 $grandTotal = 0;
+$errorMsg = "";
+$successMsg = "";
 
 // If user is logged in, get cart items
 if ($userID > 0) {
@@ -55,10 +57,93 @@ if ($userID > 0) {
                 $errorMsg = "Error removing item: " . $conn->error;
             }
         }
+
+        // Handle checkout process
+        if (isset($_POST['checkout'])) {
+            $paymentMethod = $conn->real_escape_string($_POST['payment_method']);
+            $unit = $conn->real_escape_string($_POST['unit']);
+            $state = $conn->real_escape_string($_POST['state']);
+            $postcode = $conn->real_escape_string($_POST['postcode']);
+            $city = $conn->real_escape_string($_POST['city']);
+            
+            // Start transaction
+            $conn->begin_transaction();
+            
+            try {
+                // Get cart items with product details
+                $cartSql = "SELECT c.cartID, c.productID, c.variantID, c.quantity, p.price 
+                            FROM Cart c 
+                            JOIN Products p ON c.productID = p.productID 
+                            WHERE c.userID = $userID";
+                $cartResult = $conn->query($cartSql);
+                
+                if ($cartResult->num_rows > 0) {
+                    $cartItems = [];
+                    $totalAmount = 0;
+                    
+                    while ($item = $cartResult->fetch_assoc()) {
+                        $cartItems[] = $item;
+                        $totalAmount += $item['price'] * $item['quantity'];
+                    }
+                    
+                    // Insert order
+                    $orderSql = "INSERT INTO Orders (userID, totalAmount, paymentMethod, unit, state, postcode, city) 
+                                 VALUES ($userID, $totalAmount, '$paymentMethod', '$unit', '$state', '$postcode', '$city')";
+                    
+                    if ($conn->query($orderSql)) {
+                        $orderID = $conn->insert_id;
+                        
+                        // Insert order items
+                        foreach ($cartItems as $item) {
+                            $productID = $item['productID'];
+                            $variantID = $item['variantID'];
+                            $quantity = $item['quantity'];
+                            $price = $item['price'];
+                            
+                            $orderItemSql = "INSERT INTO OrderItems (orderID, productID, variantID, quantity, price) 
+                                             VALUES ($orderID, $productID, $variantID, $quantity, $price)";
+                            
+                            if (!$conn->query($orderItemSql)) {
+                                throw new Exception("Error inserting order item: " . $conn->error);
+                            }
+                            
+                            // Update stock
+                            if ($variantID) {
+                                $updateStockSql = "UPDATE ProductVariants SET stock = stock - $quantity WHERE variantID = $variantID";
+                                if (!$conn->query($updateStockSql)) {
+                                    throw new Exception("Error updating stock: " . $conn->error);
+                                }
+                            }
+                        }
+                        
+                        // Clear cart
+                        $clearCartSql = "DELETE FROM Cart WHERE userID = $userID";
+                        if (!$conn->query($clearCartSql)) {
+                            throw new Exception("Error clearing cart: " . $conn->error);
+                        }
+                        
+                        // Commit transaction
+                        $conn->commit();
+                        
+                        // Redirect to thank you page with order ID
+                        header("Location: thankyou.php?order_id=$orderID");
+                        exit();
+                    } else {
+                        throw new Exception("Error creating order: " . $conn->error);
+                    }
+                } else {
+                    $errorMsg = "Your cart is empty.";
+                }
+            } catch (Exception $e) {
+                // Rollback transaction on error
+                $conn->rollback();
+                $errorMsg = $e->getMessage();
+            }
+        }
     }
 
     // Get cart items from database
-    $sql = "SELECT c.cartID, c.quantity, p.productID, p.name, p.price, 
+    $sql = "SELECT c.cartID, c.quantity, c.variantID, p.productID, p.name, p.price, 
                    (SELECT image_url FROM ProductImages WHERE productID = p.productID LIMIT 1) as image_url
             FROM Cart c 
             JOIN Products p ON c.productID = p.productID 
@@ -184,6 +269,8 @@ if ($userID > 0) {
             </div>
         </div>
     </section>
+
+    <?php if (count($cartItems) > 0): ?>
     <section class="summary-section">
         <div class="cart-summary">
             <h2>Order Summary</h2>
@@ -192,21 +279,42 @@ if ($userID > 0) {
             <hr>
             <div class="summary-total"><span>Total</span><span id="grand-total">RM <?php echo number_format($grandTotal, 2); ?></span></div>
 
-            <div class="payment-methods">
-                <h3>Payment Method</h3>
-                <label class="pay-option"><input type="radio" name="pay" value="online_banking" checked> <span>Online Banking (FPX)</span></label>
-                <label class="pay-option"><input type="radio" name="pay" value="tng"> <span>TNG eWallet</span></label>
-                <label class="pay-option"><input type="radio" name="pay" value="grabpay"> <span>GrabPay</span></label>
-            </div>
+            <!-- Checkout Form -->
+            <form method="POST" id="checkout-form">
+                <input type="hidden" name="checkout" value="1">
+                
+                <div class="shipping-info">
+                    <h3>Shipping Information</h3>
+                    <div class="form-group">
+                        <label for="unit">Unit/House No:</label>
+                        <input type="text" id="unit" name="unit" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" name="state" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postcode">Postcode:</label>
+                        <input type="text" id="postcode" name="postcode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                </div>
 
-            <?php if (count($cartItems) > 0): ?>
-                <button id="checkout-btn" class="checkout-btn">Proceed to Pay</button>
-            <?php else: ?>
-                <button id="checkout-btn" class="checkout-btn" disabled>Proceed to Pay</button>
-            <?php endif; ?>
-            <p id="checkout-msg" class="checkout-msg" style="display:none;"></p>
+                <div class="payment-methods">
+                    <h3>Payment Method</h3>
+                    <label class="pay-option"><input type="radio" name="payment_method" value="online_banking" checked required> <span>Online Banking (FPX)</span></label>
+                    <label class="pay-option"><input type="radio" name="payment_method" value="tng"> <span>TNG eWallet</span></label>
+                    <label class="pay-option"><input type="radio" name="payment_method" value="grabpay"> <span>GrabPay</span></label>
+                </div>
+
+                <button type="submit" class="checkout-btn">Proceed to Pay</button>
+            </form>
         </div>
     </section>
+    <?php endif; ?>
 
     <?php include '../includes/footer.php'; ?>
     <div class="copyright">
@@ -216,27 +324,6 @@ if ($userID > 0) {
     <script>
         // JavaScript for enhanced functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Add event listener to checkout button
-            const checkoutBtn = document.getElementById('checkout-btn');
-            if (checkoutBtn && !checkoutBtn.disabled) {
-                checkoutBtn.addEventListener('click', function() {
-                    const method = document.querySelector('input[name="pay"]:checked').value;
-                    const msg = document.getElementById('checkout-msg');
-                    msg.textContent = 'Redirecting to ' +
-                        (method === 'tng' ? 'TNG eWallet' :
-                            method === 'grabpay' ? 'GrabPay' : 'Online Banking (FPX)') + ' checkout...';
-                    msg.style.display = 'block';
-
-                    // In a real application, you would redirect to a payment processor
-                    setTimeout(() => {
-                        alert('Payment successful. Thank you for your order!');
-
-                        // In a real application, you would create an order here and clear the cart
-                        window.location.href = 'thankyou.php';
-                    }, 1500);
-                });
-            }
-
             // Add confirmation for remove actions
             const removeForms = document.querySelectorAll('form[action$="remove_item"]');
             removeForms.forEach(form => {
@@ -246,6 +333,22 @@ if ($userID > 0) {
                     }
                 });
             });
+
+            // Add validation to checkout form
+            const checkoutForm = document.getElementById('checkout-form');
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    const unit = document.getElementById('unit').value;
+                    const state = document.getElementById('state').value;
+                    const postcode = document.getElementById('postcode').value;
+                    const city = document.getElementById('city').value;
+                    
+                    if (!unit || !state || !postcode || !city) {
+                        e.preventDefault();
+                        alert('Please fill in all shipping information fields.');
+                    }
+                });
+            }
         });
     </script>
 </body>
