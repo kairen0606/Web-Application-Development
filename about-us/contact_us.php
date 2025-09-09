@@ -46,19 +46,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <title>Contact Us</title>
 
         <!-- Google Font: Figtree -->
-        <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         
         <!-- REMIXICONS -->
-        <link rel="stylesheet" href="../style/styles.css">
-        <link rel="stylesheet" href="../style/login-signUpStyle.css">
+        <link rel="stylesheet" href="../Styles/style.css">
+        <link rel="stylesheet" href="../Styles/login-signUp-style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
         <style>
             .contact-container {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-start;
-                padding: 50px;
+                padding: 150px 50px;
                 max-width: 1200px;
                 margin: 0 auto;
                 gap: 20px;
@@ -142,9 +143,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="contact-container">
             <!-- Google Map -->
             <div class="contact-map">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63742.02713729366!2d101.64838704863283!3d3.127285800000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37635624f525%3A0x9e6342e9a2eafd9e!2sSUB%20-%20SUNWAY%20VELOCITY!5e0!3m2!1sen!2smy!4v1744300895995!5m2!1sen!2smy" 
-                    width="100%" 
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.430506100741!2d103.81223227714989!3d1.5112604945413588!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da6df83482b785%3A0x2d77d4ad9af05986!2sPRIND%20Concept%20Store%20JB%20by%20Double%20V%20Sport!5e0!3m2!1sen!2smy!4v1757445785179!5m2!1sen!2smy" 
+                   width="100%" 
                     height="475" 
                     style="border:0;" 
                     allowfullscreen="" 
@@ -157,8 +157,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="contact-form">
             <div class="contact-info">
                 <h2>Contact Info</h2>
-                <p><i class="ri-map-pin-line"></i> Lot 1-50A, 1st Floor, Sunway Velocity Mall, 55100 Kuala Lumpur</p>
-                <p><i class="ri-mail-line"></i> tub_apparel@gmail.com</p>
+                <p><i class="ri-map-pin-line"></i> G-01, Block B, Permas City, Kawasan Perdagangan, Jalan Permas Udara, Bandar Baru Permas Jaya, 81750 Masai, Johor Darul Ta'zim</p>
+                <p><i class="ri-mail-line"></i> pr_ind@gmail.com</p>
                 <p><i class="ri-phone-line"></i> +603-1234-5678</p>
             </div>
 

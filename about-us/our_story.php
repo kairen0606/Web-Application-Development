@@ -1,22 +1,39 @@
+<?php
+// Start session to get user information
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}?>
+
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Story</title>
+    <title>Our Story - Present PR IND</title>
 
     <!-- Google Font: Figtree -->
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+     <link rel="stylesheet" href="../Styles/style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- REMIXICONS -->
-    <link rel="stylesheet" href="../style/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
     <style>
+
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+        }
+        
         .video-container {
+            padding-top:100px;
             position: relative;
             width: 100%;
             height: 75vh; /* Full viewport height */
@@ -56,7 +73,7 @@
 
         .main-title {
             font-family: Figtree;
-            font-size: 1.5rem;
+            font-size: 4.5rem;
             margin: 0;
             letter-spacing: 8px;
             text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
@@ -102,58 +119,108 @@
             }
         }
 
-        .story-description{
-            align-content: center;
-            margin: 0 60px;
+        .why-choose-section {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 5%;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
+        .why-choose-image-container {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .why-choose-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .why-choose-image-container:hover img {
+            transform: scale(1.03);
+        }
+
+        .story-description {
+            flex: 1;
+        }
+        
         .story-description h2, p {
             text-align: left;
             
         }
+        
         .story-description h2{
             font-size: 32px;
             margin-bottom: 8px;
+            color: var(--primary-color);
+            font-family: 'Figtree', sans-serif;
         }
+        
         .story-description p{
             font-size: 16px;
             line-height: 1.5;
+            color: var(--dark-color);
         }
+        
     </style>
 </head>
 <body>
+    <!-- Note: The PHP includes would need to be adjusted based on your file structure -->
     <?php include '../includes/header.php';?>
 
     <div class="video-container">
         <video autoplay muted loop id="our-story-video">
-            <source src="../img/our_story.mp4" type="video/mp4">
+            <!-- Replace with a badminton-related video -->
+            <source src="../img/pr.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
 
         <div class="brand-statement">
-            <h1 class="main-title">TUB Clothing</h1>
-            <p class="subtitle">No rules. Just Statement.</p>
+            <h1 class="main-title">PRESENT PR IND</h1>
+            <p class="subtitle">Excellence in Every Game</p>
         </div>
     </div>
 
     <section class="why-choose-section" id="why-choose-section" data-aos="fade-up" data-aos-duration="2500">
         <div class="why-choose-image-container">
-            <img name="why-choose-image" src="../img/story.jpg" alt="Our Story Banner">
+            <img name="why-choose-image" src="../img/pr.jpg" alt="Our Badminton Story">
         </div>
         <div class="story-description">
             <h2>Our Story</h2>
             <p>
-            Born in the streets of NYC in 1997, TUB was forged from rebellion and raw self-expression. We broke the rules then, and we’re 
-            rewriting them now—merging downtown edge with Southeast Asian soul. This is clothing that doesn’t whisper, but shouts.
+                Founded in 2005 by professional badminton players, Present PR IND was born from a passion for the sport and a commitment to excellence. 
+                We started as a small workshop crafting custom rackets for elite players and have grown into a trusted name in badminton equipment.
             </p>
             <br>
             <p>
-            At TUB, apparel is our canvas. Each piece tells a story, sparking conversations and bridging cultures. This is more than clothing; 
-            it’s a testament to our roots and a bold declaration of what our region can offer the world.
+                Our journey began when our founders noticed a gap in the market for high-quality, performance-driven badminton gear that was accessible to players at all levels. 
+                Today, we combine cutting-edge technology with expert craftsmanship to create equipment that enhances performance and withstands the test of time.
             </p>
         </div>
     </section>
 
+ 
+
     <script>
-        AOS.init()
+        AOS.init();
+        
+        // Fallback in case video doesn't load
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('our-story-video');
+            video.addEventListener('error', function() {
+                // You could set a fallback background image here
+                this.parentElement.style.background = 'url("../img/pr.jpg") center/cover no-repeat';
+                this.style.display = 'none';
+            });
+        });
     </script>
     
     <?php include '../includes/footer.php';?>

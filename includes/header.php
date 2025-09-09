@@ -53,8 +53,8 @@ if (session_status() === PHP_SESSION_NONE) {
                     </svg>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/Web_Application/about-us/our_story.php">Our Story</a></li>
-                    <li><a href="/Web_Application/about-us/contact_us.php">Contact Us</a></li>
+                    <li><a href="/Web-Application-Development/about-us/our_story.php">Our Story</a></li>
+                    <li><a href="/Web-Application-Development/about-us/contact_us.php">Contact Us</a></li>
                 </ul>
             </li>
         </ul>
