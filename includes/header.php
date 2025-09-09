@@ -66,7 +66,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="/Web-Application-Development/Pages/wishlist.php"><i class="fas fa-heart"></i></a>
             <?php else: ?>
                 <!-- Redirect to Login if not logged in -->
-                <a href="/Web-Application-Development/user/login.php" onclick="alert('Please log in to access your cart.');"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="/Web-Application-Development/user/login.php" onclick="alert('Please log in to access your cart.');"><i class="fa-solid fa-heart"></i></a>
             <?php endif; ?>
             <?php if (isset($_SESSION['user_email'])): ?>
                 <!-- Redirect to Cart if logged in -->

@@ -28,13 +28,13 @@
           transform: translateY(-100%);
         }
 
-        .nav-bar{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 50px;
-            width: 100%; 
-            position: relative;
+        .nav-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px 50px;
+          width: 100%;
+          position: relative;
         }
 
         .logo {
@@ -48,18 +48,18 @@
         }
 
         .nav-menu {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-            flex-grow: 1;
+          list-style: none;
+          display: flex;
+          gap: 30px;
+          flex-grow: 1;
         }
 
         .nav-menu li {
-            position: relative;
+          position: relative;
         }
 
         .nav-menu a {
-            color: black;
+          color: black;
           text-decoration: none;
           font-weight: 500;
           transition: opacity 0.3s ease;
@@ -115,15 +115,15 @@
           gap: 20px;
         }
 
-        .nav-icons a{
-            text-decoration: none;
-            color: inherit;
+        .nav-icons a {
+          text-decoration: none;
+          color: inherit;
         }
 
         .nav-icon i {
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-            color:black
+          cursor: pointer;
+          transition: 0.3s ease-in-out;
+          color: black
         }
 
         .nav-icon i:hover {
@@ -134,150 +134,151 @@
         /* ================ For Smaller Dimension Viewport =============== */
         /* Hamburger Menu Icon */
         .hamburger-menu i {
-            display: none; 
-            font-size: 24px; 
-            color: #333; 
-            cursor: pointer; 
-            top: 10px;
-            left: 20px;
-            transition: color 0.3s ease;
+          display: none;
+          font-size: 24px;
+          color: #333;
+          cursor: pointer;
+          top: 10px;
+          left: 20px;
+          transition: color 0.3s ease;
         }
 
         .hamburger-menu:hover {
-            color: #000; 
+          color: #000;
         }
 
         /* Hamburger Menu Icon */
         .hamburger-menu {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
         }
 
         .hamburger-icon {
-            font-size: 24px;
-            color: #333;
+          font-size: 24px;
+          color: #333;
         }
 
         /* Sliding Hamburger Menu */
         .hamburger-overlay {
-            position: fixed;
-            top: 0;
-            left: -300px; 
-            width: 300px;
-            height: 100vh;
-            background-color: #fff;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            z-index: 1001;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: left 0.3s ease;
-            overflow: hidden;
+          position: fixed;
+          top: 0;
+          left: -300px;
+          width: 300px;
+          height: 100vh;
+          background-color: #fff;
+          box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+          z-index: 1001;
+          padding: 20px;
+          box-sizing: border-box;
+          transition: left 0.3s ease;
+          overflow: hidden;
         }
 
         /* Close Icon */
         .close-icon {
-            font-size: 28px;
-            color: #333;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
+          font-size: 28px;
+          color: #333;
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          cursor: pointer;
         }
 
         /* Hamburger Menu List */
         .hamburger-menu-list {
-            list-style: none;
-            padding: 50px 0;
-            margin: 0;
+          list-style: none;
+          padding: 50px 0;
+          margin: 0;
         }
 
         .hamburger-menu-list li {
-            margin: 20px 0;
+          margin: 20px 0;
         }
 
         .hamburger-menu-list li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
-            font-weight: 500;
-            transition: color 0.3s;
+          text-decoration: none;
+          color: #333;
+          font-size: 18px;
+          font-weight: 500;
+          transition: color 0.3s;
         }
 
         .hamburger-menu-list li a:hover {
-            color: #333;
+          color: #333;
         }
 
         /* Transparent Overlay */
         .hamburger-overlay-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh; 
-            background-color: rgba(0, 0, 0, 0.5); 
-            z-index: 1000; 
-            display: none; 
-            transition: opacity 0.3s ease;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 1000;
+          display: none;
+          transition: opacity 0.3s ease;
         }
 
         /* Show the menu when active */
         .hamburger-overlay.active {
-            left: 0; 
+          left: 0;
         }
 
         .hamburger-overlay-bg.active {
-            display: block;
-            opacity: 1;
+          display: block;
+          opacity: 1;
         }
 
         /* ============== Dropdown Menu ============ */
         .dropdown-menu {
-            width: 300px;
-            height: auto;
-            flex-shrink: 0;
-            opacity: 0;
-            text-align: left;
-            visibility: hidden;
-            transform: translateY(10px); 
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-            position: absolute;
-            background: white;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            z-index: 100;
+          width: 300px;
+          height: auto;
+          flex-shrink: 0;
+          opacity: 0;
+          text-align: left;
+          visibility: hidden;
+          transform: translateY(10px);
+          transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+          position: absolute;
+          background: white;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+          z-index: 100;
         }
 
         .dropdown-menu li {
-            list-style: none;
-            padding: 8px;
-            border-bottom : none
+          list-style: none;
+          padding: 8px;
+          border-bottom: none
         }
 
         .dropdown-menu li a {
-            color: #5A5A5A;
-            font-family: Inter, sans-serif; 
-            font-size: 15px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 100%; /* 30px */
-            text-decoration: none; 
-            display: block;
-            padding: 28px 10px 15px 28px;
+          color: #5A5A5A;
+          font-family: Inter, sans-serif;
+          font-size: 15px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 100%;
+          /* 30px */
+          text-decoration: none;
+          display: block;
+          padding: 28px 10px 15px 28px;
         }
 
         .dropdown-menu li:hover {
-            background: #f1f1f1;
+          background: #f1f1f1;
         }
 
         .dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
         }
 
         .divider {
-            border: 1px solid #ccc; 
+          border: 1px solid #ccc;
         }
 
         /* Slider Section */
@@ -403,7 +404,7 @@
           transform: translateX(-50%);
           width: 80px;
           height: 4px;
-          background: linear-gradient(to right,white, black);
+          background: linear-gradient(to right, white, black);
           border-radius: 2px;
         }
 
@@ -713,261 +714,266 @@
         }
 
         /* ================ 響應式設計調整 ================ */
-        
+
         /* 大型桌面設備 (1200px以上) */
         @media (min-width: 1200px) {
           .nav-bar {
             padding: 10px 80px;
           }
-          
+
           .products {
             padding: 60px 40px;
           }
         }
-        
+
         /* 中型設備 (992px - 1199px) */
         @media (max-width: 1199px) {
           .nav-menu {
             gap: 20px;
           }
-          
+
           .nav-menu a span {
             font-size: 18px;
           }
-          
+
           .slider {
             height: 600px;
           }
         }
-        
+
         /* 小型設備 (768px - 991px) */
         @media (max-width: 991px) {
           .nav-bar {
             padding: 10px 30px;
           }
-          
+
           .logo {
             margin-right: 30px;
             width: 80px;
             height: 80px;
           }
-          
+
           .nav-menu {
             gap: 15px;
           }
-          
+
           .nav-menu a span {
             font-size: 16px;
           }
-          
+
           .nav-icon {
             padding: 0.8rem 1rem;
             font-size: 22px;
             gap: 15px;
           }
-          
+
           .slider {
             height: 500px;
           }
-          
+
           .item-showcase {
             margin: 40px;
             gap: 30px;
           }
-          
+
           .item-info h3 {
             font-size: 1.8rem;
           }
         }
-        
+
         /* 平板設備 (768px以下) */
         @media (max-width: 768px) {
-          .nav-menu, .nav-icon i {
-            display: none; 
+
+          .nav-menu,
+          .nav-icon i {
+            display: none;
           }
 
           .logo {
-            margin: 0 auto;
+            margin: 0  50px 0 110px;
           }
 
           .hamburger-menu {
-            display: block; 
+            display: block;
           }
 
           .hamburger-menu i {
-            display: block; 
-            font-size: 28px; 
+            display: block;
+            font-size: 28px;
           }
 
           .nav-bar {
             padding-left: 20px;
             padding-right: 20px;
           }
-          
+
           .slider {
             height: 400px;
           }
-          
+
           .controls button {
             width: 40px;
             height: 40px;
             font-size: 1.2rem;
           }
-          
+
           .products h2 {
             font-size: 2rem;
           }
-          
+
           .product-list {
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
           }
-          
+
           .item-showcase {
             flex-direction: column;
             margin: 30px 20px;
             gap: 25px;
           }
-          
-          .item-image, .item-info {
+
+          .item-image,
+          .item-info {
             min-width: 100%;
           }
-          
+
           .footer-container {
             flex-direction: column;
             gap: 20px;
           }
-          
-          .footer-left, .footer-center, .footer-right {
+
+          .footer-left,
+          .footer-center,
+          .footer-right {
             min-width: 100%;
           }
         }
-        
+
         /* 手機設備 (480px以下) */
         @media (max-width: 480px) {
           body {
-            font-size: 14px; 
+            font-size: 14px;
           }
-          
+
           header {
             height: 80px;
           }
-          
+
           .nav-bar {
             padding: 10px 15px;
           }
-          
+
           .logo {
             width: 60px;
             height: 60px;
           }
-          
+
           .hamburger-menu i {
             font-size: 24px;
           }
-          
+
           .hamburger-overlay {
             width: 250px;
           }
-          
+
           .slider {
             height: 300px;
           }
-          
+
           .controls button {
             width: 35px;
             height: 35px;
             font-size: 1rem;
             margin: 0 8px;
           }
-          
+
           .dots {
             bottom: 15px;
           }
-          
+
           .dot {
             width: 10px;
             height: 10px;
           }
-          
+
           .products {
             padding: 30px 15px;
           }
-          
+
           .products h2 {
             font-size: 1.8rem;
             margin-bottom: 30px;
           }
-          
+
           .product-list {
             grid-template-columns: 1fr;
             gap: 15px;
           }
-          
+
           .product img {
             height: 180px;
           }
-          
+
           .product h3 {
             padding: 15px;
             font-size: 1.2rem;
           }
-          
+
           .item-showcase {
             margin: 20px 15px;
             gap: 20px;
           }
-          
+
           .item-info h3 {
             font-size: 1.6rem;
           }
-          
+
           .item-info p {
             font-size: 1rem;
             margin-bottom: 20px;
           }
-          
+
           .item-btn {
             padding: 10px 25px;
             font-size: 16px;
           }
-          
+
           .copyright p {
             font-size: 12px;
             padding: 15px;
           }
         }
-        
+
         /* 超小設備 (360px以下) */
         @media (max-width: 360px) {
           .slider {
             height: 250px;
           }
-          
+
           .products h2 {
             font-size: 1.6rem;
           }
-          
+
           .item-info h3 {
             font-size: 1.4rem;
           }
-          
+
           .hamburger-overlay {
             width: 220px;
           }
         }
-        
+
         /* 橫向手機設備 */
         @media (max-height: 500px) and (orientation: landscape) {
           header {
             height: 70px;
           }
-          
+
           .logo {
             width: 50px;
             height: 50px;
           }
-          
+
           .slider {
             height: 250px;
           }

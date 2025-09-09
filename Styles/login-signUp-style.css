@@ -6,14 +6,14 @@
 }
 
 body{
-    padding-top:100px;
     background: #f9f9f9;
     color: #333;
 }
 
 /*============== Login Page and Sign Up Page ================ */
 .authentication-heading{
-    margin: 40px 0 40px;
+    padding-top:150px;
+    margin: 0 0 40px;
     color: #000;
     text-align: center;
     font-size: 40px;
