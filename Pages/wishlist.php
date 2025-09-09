@@ -118,8 +118,7 @@ if ($userID > 0) {
         }
         
         .wishlist-hero {
-            margin-top: 90px;
-            padding: 60px 20px;
+            padding: 150px 60px 20px;
             text-align: center;
             background: #f7f8fb;
         }
