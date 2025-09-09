@@ -353,7 +353,7 @@ if ($userID > 0) {
                     <i class="fa-solid fa-heart"></i>
                     <h2>Your wishlist is empty</h2>
                     <p>Start adding items you love to your wishlist</p>
-                    <a href="../product.php" class="shop-btn">Continue Shopping</a>
+                    <a href="../products.php" class="shop-btn">Continue Shopping</a>
                 </div>
             <?php else: ?>
                 <div class="wishlist-grid">
