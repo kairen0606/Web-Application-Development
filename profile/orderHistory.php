@@ -29,24 +29,109 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History - PRESENT PR IND</title>
-     <link rel="stylesheet" href="../Styles/profile.css">
+    <link rel="stylesheet" href="../Styles/profile.css">
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .order-details-table {
+            margin-bottom: 10px;
+            border-spacing: 0 20px;
+            width: 100%;
+            overflow-x: auto;
 
+        }
+
+
+
+        .order-details-table th,
+        .order-details-table td {
+            text-align: center;
+            padding: 10px 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-details-table th {
+            font-weight: bold;
+            background-color: #f4f4f4;
+            color: #333;
+            width: 150px;
+            white-space: nowrap;
+        }
+
+        .order-details-table td {
+            color: #555;
+            word-wrap: break-word;
+
+        }
+
+        .back-btn {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 100px;
+            height: 45px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .back-btn a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            line-height: 45px;
+        }
+
+        .back-btn a:visited {
+            color: white;
+        }
+
+        h4 {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .order-details-table {
+                font-size: 14px;
+            }
+
+            .back-btn {
+                width: 100%;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .order-details-table {
+                font-size: 12px;
+            }
+
+            .back-btn {
+                width: 100%;
+                font-size: 10px;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <?php include '../includes/header.php'; ?>
     <div class="container">
         <div class="sidebar">
             <a href="personalInfo.php">Personal Info</a>
             <a href="editProfile.php">Edit Profile</a>
-            <a href="orderHistory.php" style="font-weight: bold;">Order History</a>
+            <a href="orderHistory.php" style="font-weight: bold;">| Order History</a>
             <a href="viewStatistic.php">View Statistic</a>
             <a href="logout.php">Log out</a>
         </div>
@@ -54,6 +139,8 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
             <div class="card">
                 <h2>Order History</h2>
                 <br>
+                <hr>
+
                 <?php if ($successMessage): ?>
                     <div class="message success">
                         <?php echo htmlspecialchars($successMessage); ?>
@@ -67,7 +154,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
                     <?php if (!empty($orderDetails['orderItems'])): ?>
                         <table class="order-details-table">
                             <thead>
-                                <tr>
+                                <tr id="order-details-header">
                                     <th>Product</th>
                                     <th>Details</th>
                                     <th>Price</th>
@@ -84,8 +171,8 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
                                 ?>
                                     <tr>
                                         <td>
-                                            <img src="<?php echo htmlspecialchars($item['image_url'] ?? '../img/default.png'); ?>" 
-                                                 alt="Product Image" class="product-image">
+                                            <img src="<?php echo htmlspecialchars($item['image_url'] ?? '../img/default.png'); ?>"
+                                                alt="Product Image" class="product-img" width="60">
                                         </td>
                                         <td>
                                             <div class="product-info">
@@ -149,11 +236,7 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                            <a href="?page=<?php echo $i; ?>" class="<?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
-                        <?php endfor; ?>
-                    </div>
+
                 <?php endif; ?>
             </div>
         </div>
@@ -161,4 +244,5 @@ if (isset($_GET['status']) && $_GET['status'] == 'success') {
 
     <?php include '../includes/footer.php'; ?>
 </body>
+
 </html>
