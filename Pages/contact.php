@@ -1,3 +1,47 @@
+<?php
+	$errors = [];
+	$name = '';
+	$email = '';
+	$phone = '';
+	$salutation = '';
+	$enquiryType = '';
+	$subject = '';
+	$success = false;
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		$salutation = trim($_POST['sal'] ?? '');
+		$name = trim($_POST['name'] ?? '');
+		$email = trim($_POST['email'] ?? '');
+		$phone = trim($_POST['phone'] ?? '');
+		$enquiryType = trim($_POST['enquiry'] ?? '');
+		$subject = trim($_POST['subject'] ?? '');
+
+		if ($salutation === '') {
+			$errors['sal'] = 'Please select your salutation';
+		}
+		if ($name === '') {
+			$errors['name'] = 'Please enter your name';
+		}
+		if ($email === '') {
+			$errors['email'] = 'Please enter your email address';
+		} elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			$errors['email'] = 'Please enter a valid email address';
+		}
+		if ($phone === '') {
+			$errors['phone'] = 'Please enter your phone number';
+		} elseif (!preg_match('/^\d{10,15}$/', $phone)) {
+			$errors['phone'] = 'Enter a valid phone number (10-15 digits).';
+		}
+		if ($enquiryType === '') {
+			$errors['enquiry'] = 'Please select the type of enquiry';
+		}
+		if ($subject === '') {
+			$errors['subject'] = 'Please enter your message';
+		}
+
+		$success = empty($errors);
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +50,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Contact Us - PR ind</title>
 	<link rel="stylesheet" href="../Styles/style.css">
+	<link rel="stylesheet" href="../Styles/contact.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -28,6 +73,100 @@
 				<p>Phone: <a href="tel:+0395433366">03-95433366</a></p>
 				<p>Business hours: Mon–Fri, 9:00–18:00</p>
 			</div>
+
+			<div class="contact-card">
+				<h3>Visit Our Store</h3>
+				<p>Find us at our main location in Kuala Lumpur</p>
+				<div class="map-container">
+					<iframe 
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.7899999999998!2d101.686855!3d3.139003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc37d12d669c1f%3A0x8e4a7c1f0d1d1d1d!2sKuala%20Lumpur%20City%20Centre!5e0!3m2!1sen!2smy!4v1640995200000!5m2!1sen!2smy" 
+						width="100%" 
+						height="300" 
+						style="border:0;" 
+						allowfullscreen="" 
+						loading="lazy" 
+						referrerpolicy="no-referrer-when-downgrade"
+						title="PR IND Store Location">
+					</iframe>
+				</div>
+				<div class="location-info">
+					<p><strong>Address:</strong> Kuala Lumpur City Centre, Malaysia</p>
+					<p><strong>Nearest Station:</strong> KLCC LRT Station (5 min walk)</p>
+					<p><strong>Parking:</strong> Available at KLCC Mall</p>
+				</div>
+			</div>
+
+			<?php if ($success): ?>
+				<div class="contact-card" role="status" aria-live="polite">
+					<h3>Thank you for your enquiry</h3>
+					<p>We will get back to you as soon as possible. Below are your details:</p>
+					<ul>
+						<li><strong>Salutation</strong>: <?php echo htmlspecialchars($salutation); ?></li>
+						<li><strong>Name</strong>: <?php echo htmlspecialchars($name); ?></li>
+						<li><strong>Email</strong>: <?php echo htmlspecialchars($email); ?></li>
+						<li><strong>Phone</strong>: <?php echo htmlspecialchars($phone); ?></li>
+						<li><strong>Enquiry</strong>: <?php echo htmlspecialchars($enquiryType); ?></li>
+						<li><strong>Message</strong>: <?php echo nl2br(htmlspecialchars($subject)); ?></li>
+					</ul>
+				</div>
+			<?php else: ?>
+				<div class="contact-card">
+					<h3>Send us a message</h3>
+					<form id="contactForm" method="post" novalidate>
+						<div class="form-grid">
+							<div class="form-field">
+								<label for="sal">Salutation</label>
+								<select id="sal" name="sal">
+									<option value="">Select</option>
+									<option value="Mr." <?php echo $salutation==='Mr.'?'selected':''; ?>>Mr.</option>
+									<option value="Ms." <?php echo $salutation==='Ms.'?'selected':''; ?>>Ms.</option>
+									<option value="Mrs." <?php echo $salutation==='Mrs.'?'selected':''; ?>>Mrs.</option>
+									<option value="Mdm." <?php echo $salutation==='Mdm.'?'selected':''; ?>>Mdm.</option>
+								</select>
+								<div class="field-error"><?php echo $errors['sal'] ?? ''; ?></div>
+							</div>
+
+							<div class="form-field">
+								<label for="name">Name</label>
+								<input type="text" id="name" name="name" value="<?php echo htmlspecialchars($name); ?>">
+								<div class="field-error"><?php echo $errors['name'] ?? ''; ?></div>
+							</div>
+
+							<div class="form-field">
+								<label for="email">Email</label>
+								<input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
+								<div class="field-error"><?php echo $errors['email'] ?? ''; ?></div>
+							</div>
+
+							<div class="form-field">
+								<label for="phone">Phone Number</label>
+								<input type="tel" id="phone" name="phone" value="<?php echo htmlspecialchars($phone); ?>" placeholder="e.g. 0123456789">
+								<div class="field-error"><?php echo $errors['phone'] ?? ''; ?></div>
+							</div>
+
+							<div class="form-field">
+								<label>Type of Enquiry</label>
+								<div class="enquiry-options">
+									<label><input type="radio" name="enquiry" value="General" <?php echo $enquiryType==='General'?'checked':''; ?>> General</label>
+									<label><input type="radio" name="enquiry" value="Complaints" <?php echo $enquiryType==='Complaints'?'checked':''; ?>> Complaints</label>
+									<label><input type="radio" name="enquiry" value="Suggestions" <?php echo $enquiryType==='Suggestions'?'checked':''; ?>> Suggestions</label>
+								</div>
+								<div class="field-error"><?php echo $errors['enquiry'] ?? ''; ?></div>
+							</div>
+
+							<div class="form-field">
+								<label for="subject">Message</label>
+								<textarea id="subject" name="subject" rows="6" placeholder="Your message..."><?php echo htmlspecialchars($subject); ?></textarea>
+								<div class="field-error"><?php echo $errors['subject'] ?? ''; ?></div>
+							</div>
+
+							<div class="form-actions">
+								<button type="submit" class="submit-btn">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			<?php endif; ?>
 
 			<div class="socials">
 				<h3>Connect with us</h3>
@@ -54,23 +193,48 @@
 		<p>© 2025 MyWebsite. All rights reserved.</p>
 	</div>
 
-	<style>
-		.contact-hero { margin-top: 90px; padding: 80px 20px; text-align: center; background: #f7f8fb; }
-		.contact-hero h1 { margin: 0; font-size: 40px; }
-		.contact-hero p { margin-top: 10px; color: #666; }
 
-		.contact-content { padding: 40px 20px 80px; }
-		.container { max-width: 1100px; margin: 0 auto; }
-		.contact-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
-		.contact-card h2 { margin-top: 0; }
+	<script>
+		(function() {
+			var form = document.getElementById('contactForm');
+			if (!form) return;
+			form.addEventListener('submit', function(e) {
+				var errors = 0;
+				function setError(id, message) {
+					var field = document.getElementById(id);
+					var err = field && field.parentElement ? field.parentElement.querySelector('.field-error') : null;
+					if (err) err.textContent = message || '';
+				}
 
-		.socials h3 { margin-bottom: 12px; }
-		.social-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-		.social-btn { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; background: #fff; color: #111; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
-		.social-btn i { width: 22px; font-size: 18px; }
-		.social-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.06); }
-		@media (max-width: 640px) { .contact-hero { padding: 60px 16px; } .contact-hero h1 { font-size: 32px; } }
-	</style>
+				var sal = document.getElementById('sal');
+				if (!sal.value) { setError('sal', 'Please select your salutation'); errors++; } else { setError('sal', ''); }
+
+				var name = document.getElementById('name');
+				if (!name.value.trim()) { setError('name', 'Please enter your name'); errors++; } else { setError('name', ''); }
+
+				var email = document.getElementById('email');
+				var emailOk = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email.value.trim());
+				if (!email.value.trim()) { setError('email', 'Please enter your email address'); errors++; }
+				else if (!emailOk) { setError('email', 'Please enter a valid email address'); errors++; } else { setError('email', ''); }
+
+				var phone = document.getElementById('phone');
+				var phoneOk = /^\d{10,15}$/.test(phone.value.trim());
+				if (!phone.value.trim()) { setError('phone', 'Please enter your phone number'); errors++; }
+				else if (!phoneOk) { setError('phone', 'Enter a valid phone number (10-15 digits).'); errors++; } else { setError('phone', ''); }
+
+				var enquiryChecked = !!document.querySelector('input[name="enquiry"]:checked');
+				var enquiryErrorEl = document.querySelector('.enquiry-options') && document.querySelector('.enquiry-options').parentElement ? document.querySelector('.enquiry-options').parentElement.querySelector('.field-error') : null;
+				if (!enquiryChecked) { if (enquiryErrorEl) enquiryErrorEl.textContent = 'Please select the type of enquiry'; errors++; } else { if (enquiryErrorEl) enquiryErrorEl.textContent = ''; }
+
+				var subject = document.getElementById('subject');
+				if (!subject.value.trim()) { setError('subject', 'Please enter your message'); errors++; } else { setError('subject', ''); }
+
+				if (errors > 0) {
+					e.preventDefault();
+				}
+			});
+		})();
+	</script>
 
 </body>
 
