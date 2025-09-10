@@ -168,6 +168,43 @@ body {
     background: #f5f5f5;
 }
 
+/* Add these styles to cart.css */
+.shipping-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.shipping-info h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #1a1a1a;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
 .checkout-btn {
     width: 100%;
     margin-top: 20px;
@@ -240,32 +277,4 @@ body {
 
 .shop-btn:hover {
     background: #333;
-}
-
-
-.error-msg {
-    background: #ffebee;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border-left: 4px solid #f44336;
-    color: #c62828;
-}
-
-.success-msg {
-    background: #d4edda;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border-left: 4px solid #28a745;
-    color: #155724;
-}
-
-.debug-info {
-    background: #fff3cd;
-    color: #856404;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 15px 0;
-    border-left: 4px solid #ffc107;
 }

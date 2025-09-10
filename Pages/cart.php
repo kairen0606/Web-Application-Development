@@ -194,13 +194,13 @@ if ($userID > 0) {
 
     <section class="cart-section">
         <div class="container">
-            <?php if (isset($errorMsg)): ?>
-                <div class="error-msg"><?php echo $errorMsg; ?></div>
-            <?php endif; ?>
+        <?php if (!empty($errorMsg)): ?>
+            <script>alert("<?php echo addslashes($errorMsg); ?>");</script>
+        <?php endif; ?>
 
-            <?php if (isset($successMsg)): ?>
-                <div class="success-msg"><?php echo $successMsg; ?></div>
-            <?php endif; ?>
+        <?php if (!empty($successMsg)): ?>
+            <script>alert("<?php echo addslashes($successMsg); ?>");</script>
+        <?php endif; ?>
 
             <div class="cart-items">
                 <table class="cart-table">

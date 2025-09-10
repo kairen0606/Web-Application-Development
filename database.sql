@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Products (
     productID INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
-    price DECIMAL(13,2) NOT NULL,
+    price DECIMAL(13.2) NOT NULL,
     categoryID INT,
     colour VARCHAR(20),
     FOREIGN KEY (categoryID) REFERENCES Categories(categoryID),
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS OrderItems (
     productID INT,
     variantID INT,
     quantity INT,
-    price DECIMAL(13,2) NOT NULL,
+    price DECIMAL(13.2) NOT NULL,
     FOREIGN KEY (orderID) REFERENCES Orders(orderID),
     FOREIGN KEY (productID) REFERENCES Products(productID),
     FOREIGN KEY (variantID) REFERENCES ProductVariants(variantID)
