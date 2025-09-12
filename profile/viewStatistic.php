@@ -58,7 +58,19 @@ if (!empty($orderHistory)) {
         
         if (isset($orderDetails['orderItems'])) {
             foreach ($orderDetails['orderItems'] as $item) {
-                $category = $item['category'] ?? 'Uncategorized';
+                // 调试输出 - 查看获取到的数据
+                 echo "<pre>"; print_r($item); echo "</pre>";
+                
+                // 获取类别信息 - 尝试多种可能的字段名
+                $category = 'Uncategorized';
+                if (isset($item['category']) && !empty($item['category'])) {
+                    $category = $item['category'];
+                } elseif (isset($item['product_category']) && !empty($item['product_category'])) {
+                    $category = $item['product_category'];
+                } elseif (isset($item['type']) && !empty($item['type'])) {
+                    $category = $item['type'];
+                }
+                
                 $productName = $item['name'] ?? 'Unknown';
                 
                 // 更新类别统计
@@ -107,6 +119,9 @@ if (!empty($defaultStats['categories'])) {
         }
     }
 }
+
+// 调试输出 - 查看统计结果
+ echo "<pre>Yearly Stats: "; print_r($yearlyStats); echo "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -239,6 +254,14 @@ if (!empty($defaultStats['categories'])) {
             height: auto !important;
         }
         
+        .debug-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -322,6 +345,23 @@ if (!empty($defaultStats['categories'])) {
                         <h2>Monthly Orders (<?php echo $defaultYear; ?>)</h2>
                         <canvas id="monthlyOrdersChart"></canvas>
                     </div>
+                </div>
+                
+                <!-- 调试信息 -->
+                <div class="debug-info">
+                    <h3>Debug Information</h3>
+                    <p>Available Years: <?php echo implode(', ', $availableYears); ?></p>
+                    <p>Categories Found: 
+                        <?php 
+                        if (!empty($defaultStats['categories'])) {
+                            foreach ($defaultStats['categories'] as $cat => $count) {
+                                echo "$cat ($count), ";
+                            }
+                        } else {
+                            echo "None found - check database queries";
+                        }
+                        ?>
+                    </p>
                 </div>
             <?php endif; ?>
         </div>
@@ -471,4 +511,4 @@ if (!empty($defaultStats['categories'])) {
         });
     </script>
 </body>
-</html>
+</html>0

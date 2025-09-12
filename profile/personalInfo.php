@@ -25,15 +25,7 @@ if (!$userData || isset($userData['success']) && !$userData['success']) {
     <link rel="stylesheet" href="../Styles/profile.css">
     <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
-    <style>
-        .info-table { width: 100%; border-collapse: collapse; }
-        .info-table td { padding: 10px; border-bottom: 1px solid #eee; }
-        .info-table td:first-child { font-weight: bold; width: 30%; }
-        .message { margin-bottom: 10px; padding: 10px; border-radius: 5px; }
-        .success { background-color: #d4edda; color: #155724; }
-        .error-message { background-color: #f8d7da; color: #721c24; }
-        .edit-btn { margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; }
-    </style>
+
 </head>
 <body>
     <?php include '../includes/header.php'; ?>
