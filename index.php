@@ -136,7 +136,7 @@
             <span class="new-arrival-tag" style="text-align:right">Comming Soon</span>
             <h3>Pickle Ball Racket</h3>
             <p>This is a P.R IND (Purui) Lustre Fruit Series** pickleball paddle, featuring multiple colorful designs with fruit-themed patterns.</p>
-            <a href="#" class="item-btn">LEARN MORE</a>
+            <a href="./Pages/product.php" class="item-btn">LEARN MORE</a>
         </div>
 
         <div class="item-image animate-right">
