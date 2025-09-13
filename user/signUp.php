@@ -133,6 +133,6 @@
     <?php include '../includes/footer.php';?>
     
     <!-- JavaScript -->
-    <script src="../js/validation.js"></script>
+    <script src="../user/validation.js"></script>
 </body>
 </html>
