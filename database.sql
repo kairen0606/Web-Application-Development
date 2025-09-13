@@ -77,6 +77,8 @@ CREATE TABLE IF NOT EXISTS OrderItems (
     variantID INT,
     quantity INT,
     price DECIMAL(13.2) NOT NULL,
+    categoryID INT,
+    FOREIGN KEY (categoryID) REFERENCES Categories(categoryID),
     FOREIGN KEY (orderID) REFERENCES Orders(orderID),
     FOREIGN KEY (productID) REFERENCES Products(productID),
     FOREIGN KEY (variantID) REFERENCES ProductVariants(variantID)
@@ -137,17 +139,17 @@ INSERT IGNORE INTO Products (name, description, price, categoryID, colour) VALUE
 ('P.R IND Badminton Backpack Dark Grey', 'Durable sports backpack in dark grey, offering functionality and comfort.', 159.90, 4, 'Dark Grey'),
 
 
-('PK777 Tee Black-White', 'Breathable and comfortable sports tee with a classic black-white design.', 159.90, 2, 'Black/White'),
-('PK777 Tee Black-Blue', 'Lightweight sports tee in black-blue, perfect for training and casual wear.', 159.90, 2, 'Black/Blue'),
-('P.R Gold Label Logo Tee White', 'Premium sports tee with gold label branding, soft and stylish.', 159.90, 2, 'White'),
-('P.R Gold Label Logo Tee Black', 'Classic black tee with gold label design, offering comfort and style.', 159.90, 2, 'Black'),
-('Kaleidoscope Plus Tee Pink', 'Vibrant pink sports tee with a modern fit for comfort and performance.', 159.90, 2, 'Pink'),
-('Kaleidoscope Plus Tee Yellow', 'Bright yellow tee with breathable fabric, ideal for both sports and casual wear.', 159.90, 2, 'Yellow'),
+('PK777 Tee Black-White', 'Breathable and comfortable sports tee with a classic black-white design.', 59.90, 2, 'Black/White'),
+('PK777 Tee Black-Blue', 'Lightweight sports tee in black-blue, perfect for training and casual wear.', 59.90, 2, 'Black/Blue'),
+('P.R Gold Label Logo Tee White', 'Premium sports tee with gold label branding, soft and stylish.', 59.90, 2, 'White'),
+('P.R Gold Label Logo Tee Black', 'Classic black tee with gold label design, offering comfort and style.', 59.90, 2, 'Black'),
+('Kaleidoscope Plus Tee Pink', 'Vibrant pink sports tee with a modern fit for comfort and performance.', 89.90, 2, 'Pink'),
+('Kaleidoscope Plus Tee Yellow', 'Bright yellow tee with breathable fabric, ideal for both sports and casual wear.', 89.90, 2, 'Yellow'),
 
-('7C Grips Fluorescent Green', 'High-quality badminton grip in fluorescent green for extra comfort and control.', 159.90, 3, 'Fluorescent Green'),
-('7C Grips Green', 'Durable badminton grip in green, designed to enhance your hold and stability.', 159.90, 3, 'Green'),
-('7C Grips Yellow', 'Soft and sweat-absorbent grip in yellow, improving play comfort.', 159.90, 3, 'Yellow'),
-('G Keel Overgrip Orange', 'Premium overgrip in orange, offering a secure feel and reliable performance.', 159.90, 3, 'Orange');
+('7C Grips Fluorescent Green', 'High-quality badminton grip in fluorescent green for extra comfort and control.', 3.90, 3, 'Fluorescent Green'),
+('7C Grips Green', 'Durable badminton grip in green, designed to enhance your hold and stability.', 3.90, 3, 'Green'),
+('7C Grips Yellow', 'Soft and sweat-absorbent grip in yellow, improving play comfort.', 3.90, 3, 'Yellow'),
+('G Keel Overgrip Orange', 'Premium overgrip in orange, offering a secure feel and reliable performance.', 3.90, 3, 'Orange');
 
 -- Product Variants
 INSERT IGNORE INTO ProductVariants (productID, size, weight, grip_size, stock) VALUES

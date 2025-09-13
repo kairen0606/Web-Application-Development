@@ -5,26 +5,46 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once '../classes/user.php';
-require_once '../classes/order.php';
-require_once '../classes/product.php';
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pr_ind_db";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 $userID = $_SESSION['user_id'];
-$order = new Order();
-$user = new User();
-$product = new Product();
 
-// 获取用户订单历史
-$orderHistory = $order->getOrderHistory($userID);
+// Get user order history
+$orderHistory = [];
+$sql = "SELECT o.orderID, o.totalAmount, o.date 
+        FROM Orders o 
+        WHERE o.userID = ? 
+        ORDER BY o.date DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// 初始化统计数组
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $orderHistory[] = $row;
+    }
+}
+$stmt->close();
+
+// Initialize statistics arrays
 $yearlyStats = [];
 $monthlyAmountData = [];
 $monthlyOrderCounts = [];
 $availableYears = [];
 $categoryStats = [];
 
-// 处理订单数据
+// Process order data
 if (!empty($orderHistory)) {
     foreach ($orderHistory as $orderItem) {
         $orderDate = new DateTime($orderItem['date']);
@@ -54,48 +74,47 @@ if (!empty($orderHistory)) {
         $monthlyAmountData[$year][$month] += $orderItem['totalAmount'];
         $monthlyOrderCounts[$year][$month] += 1;
 
-        $orderDetails = $order->getOrderHistoryById($orderItem['orderID']);
+        // Get order details
+        $orderItemsSql = "SELECT oi.*, p.name as product_name, p.categoryID, c.name as category_name 
+                         FROM OrderItems oi 
+                         JOIN Products p ON oi.productID = p.productID 
+                         JOIN Categories c ON p.categoryID = c.categoryID 
+                         WHERE oi.orderID = ?";
+        $stmt = $conn->prepare($orderItemsSql);
+        $stmt->bind_param("i", $orderItem['orderID']);
+        $stmt->execute();
+        $itemsResult = $stmt->get_result();
         
-        if (isset($orderDetails['orderItems'])) {
-            foreach ($orderDetails['orderItems'] as $item) {
-                // 调试输出 - 查看获取到的数据
-                 echo "<pre>"; print_r($item); echo "</pre>";
+        if ($itemsResult->num_rows > 0) {
+            while ($item = $itemsResult->fetch_assoc()) {
+                $category = $item['category_name'] ?? 'Uncategorized';
+                $productName = $item['product_name'] ?? 'Unknown';
+                $quantity = $item['quantity'] ?? 0;
                 
-                // 获取类别信息 - 尝试多种可能的字段名
-                $category = 'Uncategorized';
-                if (isset($item['category']) && !empty($item['category'])) {
-                    $category = $item['category'];
-                } elseif (isset($item['product_category']) && !empty($item['product_category'])) {
-                    $category = $item['product_category'];
-                } elseif (isset($item['type']) && !empty($item['type'])) {
-                    $category = $item['type'];
-                }
-                
-                $productName = $item['name'] ?? 'Unknown';
-                
-                // 更新类别统计
+                // Update category statistics
                 if (!isset($yearlyStats[$year]['categories'][$category])) {
                     $yearlyStats[$year]['categories'][$category] = 0;
                 }
-                $yearlyStats[$year]['categories'][$category] += $item['quantity'];
+                $yearlyStats[$year]['categories'][$category] += $quantity;
                 
-                // 更新全局类别统计
+                // Update global category statistics
                 if (!isset($categoryStats[$category])) {
                     $categoryStats[$category] = 0;
                 }
-                $categoryStats[$category] += $item['quantity'];
+                $categoryStats[$category] += $quantity;
                 
-                // 更新最受欢迎产品
+                // Update top product
                 if (!isset($yearlyStats[$year]['topProduct']['name']) || 
-                    $item['quantity'] > $yearlyStats[$year]['topProduct']['count']) {
-                    $yearlyStats[$year]['topProduct'] = ['name' => $productName, 'count' => $item['quantity']];
+                    $quantity > $yearlyStats[$year]['topProduct']['count']) {
+                    $yearlyStats[$year]['topProduct'] = ['name' => $productName, 'count' => $quantity];
                 }
             }
         }
+        $stmt->close();
     }
 }
 
-// 设置默认年份
+// Set default year
 rsort($availableYears);
 $defaultYear = $availableYears[0] ?? date('Y');
 $defaultStats = $yearlyStats[$defaultYear] ?? [
@@ -105,10 +124,10 @@ $defaultStats = $yearlyStats[$defaultYear] ?? [
     'topProduct' => ['name' => 'N/A', 'count' => 0]
 ];
 
-// 计算平均消费
+// Calculate average spending
 $averageSpending = $defaultStats['orderCount'] ? $defaultStats['totalAmount'] / $defaultStats['orderCount'] : 0;
 
-// 找出最受欢迎的类别
+// Find most popular category
 $topCategory = 'N/A';
 $topCategoryCount = 0;
 if (!empty($defaultStats['categories'])) {
@@ -120,8 +139,8 @@ if (!empty($defaultStats['categories'])) {
     }
 }
 
-// 调试输出 - 查看统计结果
- echo "<pre>Yearly Stats: "; print_r($yearlyStats); echo "</pre>";
+// Close database connection
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -132,158 +151,20 @@ if (!empty($defaultStats['categories'])) {
     <title>Purchase Statistics</title>
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Styles/profile.css">
+    <link rel="stylesheet" href="../Styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #17a2b8;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        
-        .container {
-            display: flex;
-            max-width: 1200px;
-            margin: 20px auto;
-            gap: 20px;
-        }
-        
-        .sidebar {
-            width: 250px;
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .sidebar a {
-            display: block;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            text-decoration: none;
-            color: #333;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        
-        .sidebar a:hover {
-            background-color: #f0f0f0;
-        }
-        
-        .content {
-            flex: 1;
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .stat-card h2 {
-            margin-top: 0;
-            font-size: 18px;
-            color: #555;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        
-        .stat-item {
-            margin-bottom: 15px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            color: #777;
-        }
-        
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .filter-container {
-            background: white;
-            border-radius: 10px;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        select {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background: white;
-        }
-        
-        canvas {
-            max-width: 100%;
-            height: auto !important;
-        }
-        
-        .debug-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: auto;
-            }
-            
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+
 </head>
 <body>
+    <?php include '../includes/header.php'; ?>
     <div class="container">
         <div class="sidebar">
             <a href="personalInfo.php">Personal Info</a>
             <a href="editProfile.php">Edit Profile</a>
             <a href="orderHistory.php">Order History</a>
-            <a href="#" style="font-weight: bold; background-color: #f0f0f0;">View Statistics</a>
+            <a href="#" style="font-weight: bold;">| View Statistics</a>
             <a href="logout.php">Log out</a>
         </div>
         
@@ -346,26 +227,11 @@ if (!empty($defaultStats['categories'])) {
                         <canvas id="monthlyOrdersChart"></canvas>
                     </div>
                 </div>
-                
-                <!-- 调试信息 -->
-                <div class="debug-info">
-                    <h3>Debug Information</h3>
-                    <p>Available Years: <?php echo implode(', ', $availableYears); ?></p>
-                    <p>Categories Found: 
-                        <?php 
-                        if (!empty($defaultStats['categories'])) {
-                            foreach ($defaultStats['categories'] as $cat => $count) {
-                                echo "$cat ($count), ";
-                            }
-                        } else {
-                            echo "None found - check database queries";
-                        }
-                        ?>
-                    </p>
-                </div>
             <?php endif; ?>
         </div>
     </div>
+
+    <?php include '../includes/footer.php'; ?>
 
     <script>
         // Prepare data for charts
@@ -507,8 +373,7 @@ if (!empty($defaultStats['categories'])) {
             document.getElementById('topCategory').textContent = topCat;
             document.getElementById('topCategoryCount').textContent = 'Items: ' + topCatCount;
             document.getElementById('topProduct').textContent = yearStats.topProduct.name;
-            document.getElementById('topProductCount').textContent = 'Quantity: ' + yearStats.topProduct.count;
         });
     </script>
 </body>
-</html>0
+</html>

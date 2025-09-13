@@ -70,8 +70,8 @@ if ($userID > 0) {
             $conn->begin_transaction();
             
             try {
-                // Get cart items with product details
-                $cartSql = "SELECT c.cartID, c.productID, c.variantID, c.quantity, p.price 
+                // Get cart items with product details including categoryID
+                $cartSql = "SELECT c.cartID, c.productID, c.variantID, c.quantity, p.price, p.categoryID 
                             FROM Cart c 
                             JOIN Products p ON c.productID = p.productID 
                             WHERE c.userID = $userID";
@@ -93,15 +93,16 @@ if ($userID > 0) {
                     if ($conn->query($orderSql)) {
                         $orderID = $conn->insert_id;
                         
-                        // Insert order items
+                        // Insert order items with categoryID
                         foreach ($cartItems as $item) {
                             $productID = $item['productID'];
                             $variantID = $item['variantID'];
                             $quantity = $item['quantity'];
                             $price = $item['price'];
+                            $categoryID = $item['categoryID'];
                             
-                            $orderItemSql = "INSERT INTO OrderItems (orderID, productID, variantID, quantity, price) 
-                                             VALUES ($orderID, $productID, $variantID, $quantity, $price)";
+                            $orderItemSql = "INSERT INTO OrderItems (orderID, productID, variantID, quantity, price, categoryID) 
+                                             VALUES ($orderID, $productID, $variantID, $quantity, $price, $categoryID)";
                             
                             if (!$conn->query($orderItemSql)) {
                                 throw new Exception("Error inserting order item: " . $conn->error);
@@ -143,7 +144,7 @@ if ($userID > 0) {
     }
 
     // Get cart items from database
-    $sql = "SELECT c.cartID, c.quantity, c.variantID, p.productID, p.name, p.price, 
+    $sql = "SELECT c.cartID, c.quantity, c.variantID, p.productID, p.name, p.price, p.categoryID,
                    (SELECT image_url FROM ProductImages WHERE productID = p.productID LIMIT 1) as image_url
             FROM Cart c 
             JOIN Products p ON c.productID = p.productID 

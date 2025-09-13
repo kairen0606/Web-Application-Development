@@ -127,7 +127,7 @@
             <span class="new-arrival-tag">New Arrival</span>
             <h3>Harimau Series</h3>
             <p>This is a high-performance badminton racket designed for players who seek both power and speed. Inspired by the strength and agility of the Malayan tiger, the racket features bold tiger-themed aesthetics that reflect dominance and fierceness.</p>
-            <a href="#" class="item-btn">LEARN MORE</a>
+            <a href="./Pages/product.php" class="item-btn">LEARN MORE</a>
         </div>
     </div>
 
