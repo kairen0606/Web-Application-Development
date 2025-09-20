@@ -329,7 +329,7 @@ body {
 /* Very small devices (phones, 480px and down) */
 @media (max-width: 480px) {
     .container {
-        margin: 70px auto 20px;
+        margin: auto auto 20px;
         padding: 10px;
     }
     
