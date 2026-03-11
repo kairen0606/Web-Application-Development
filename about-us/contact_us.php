@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $message = trim($_POST["message"] ?? "");
     $valid = true;
 
-    // Validate name
+    // Validate names
     if (empty($name)) {
         $nameError = '<i class="ri-error-warning-fill"></i> Name is required.';
         $valid = false;
