@@ -1,6 +1,5 @@
 # PRIND Concept Store - Badminton E-Commerce Website
 
-![PRIND Concept Store](https://via.placeholder.com/1200x400?text=PRIND+Concept+Store)
 
 ## 📋 Overview
 
